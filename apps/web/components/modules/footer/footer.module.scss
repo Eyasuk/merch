@@ -1,0 +1,27 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+
+  .sections {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .column {
+      display: flex;
+      flex-direction: column;
+    }
+    .column > * {
+      margin-bottom: 0.3em;
+    }
+  }
+
+  .bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+  }
+  .social_media_icons > * {
+    margin-right: 1em;
+  }
+}
