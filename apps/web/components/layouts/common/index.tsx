@@ -1,8 +1,9 @@
 'use client';
-
 import { ConfigProvider, Layout } from 'antd';
-import FooterModule from 'components/modules/footer';
 import theme from 'theme/themeConfig';
+import FooterModule from 'components/modules/footer';
+import HeaderModule from 'components/modules/header';
+
 import styles from './common_layout.module.scss';
 
 type Props = {
@@ -15,7 +16,7 @@ export function CommonLayout({ children }: Props): JSX.Element {
   return (
     <ConfigProvider theme={theme}>
       <Layout>
-        <Header className={styles.header}>s</Header>
+        <Header className={styles.header} children={<HeaderModule />} />
         <Content>{children}</Content>
         <Footer>
           <FooterModule />

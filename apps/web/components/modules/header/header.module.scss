@@ -1,0 +1,43 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .logo {
+    display: flex;
+    align-items: center;
+    .brandName {
+      font-size: 20px;
+      margin-left: 0.5em;
+      color: #22a39f;
+    }
+  }
+  .navbar {
+    .links {
+      position: relative;
+      margin-right: 2em;
+    }
+    .links:hover,
+    .links:active,
+    .active {
+      &::before {
+        content: ''; // Add an empty content pseudo-element
+        position: absolute;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #22a39f; // Adjust the border color as needed
+      }
+      .text {
+        font-size: 18px;
+      }
+    }
+    .navbar > * {
+      margin-right: 0.8em;
+    }
+  }
+  .rightBar {
+    display: flex;
+    justify-content: space-between;
+  }
+}
