@@ -1,16 +1,13 @@
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
-
+import { validateInputs } from '../utils/validateForm';
 import Admin from '../models/Admin';
 import Creator from '../models/Creator';
 import User from '../models/User';
 
 export function registerHandle(req, res) {
-  const { first_name, phone, email, password } = req.body;
-
-  if (!phone || !password || !first_name) {
-  }
+  const data = validateInputs(req, res);
 }
 
 export function activeHandle(req, res) {}

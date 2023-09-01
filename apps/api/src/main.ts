@@ -7,6 +7,7 @@ import express from 'express';
 import * as path from 'path';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
+import authRouter from './routes/authRoute';
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,8 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to api!' });
 });
+
+app.use('/', authRouter);
 
 const mongoUri = process.env.MONGO_DB_URI;
 mongoose.connect(mongoUri);
