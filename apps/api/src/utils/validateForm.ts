@@ -1,12 +1,15 @@
 import { validationResult, matchedData } from 'express-validator';
 
-export function validateInputs(req, res) {
+interface ApiResponse {
+  success: boolean;
+  data: any;
+}
+
+export function validateInputs(req): ApiResponse {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     var errMsg = errors.mapped();
-    var inputData = matchedData(req);
-    res.json(200, { errors: errMsg, inputData: inputData });
-  } else {
-    return matchedData(req);
+    return { success: true, data: errMsg };
   }
+  return { success: true, data: matchedData(req) };
 }
