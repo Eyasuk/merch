@@ -28,23 +28,19 @@ export const registerHandleValidator = [
 ];
 
 export const loginHandleValidator = [
-  body('email').custom((value, { req }) => {
-    if (!value && !req.body.phone) {
-      throw new Error('Either email or phone must be provided');
-    }
-    return true;
-  }),
-  body('email', 'Invalid email').isEmail().optional().isString(),
-  body('phone').custom((value, { req }) => {
-    if (!value && !req.body.email) {
-      throw new Error('Either email or phone must be provided');
-    }
-    return true;
-  }),
-  body('phone', 'Invalid Phone number')
-    .matches(/^(\+\d{1,3})?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
-    .optional()
-    .isString(),
+  body('id')
+    .notEmpty()
+    .withMessage('Field is required')
+    .bail()
+    .custom((value) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^(\+\d{1,3})?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+      if (!emailRegex.test(value) && !phoneRegex.test(value)) {
+        throw new Error('Field must be a valid email or phone number');
+      }
+      return true; // Return true if validation passes
+    }),
+  body('password', 'Password should not be empty').not().isEmpty().isString(),
 ];
 
 export const SUDOOptionalUserAccessLevel = [

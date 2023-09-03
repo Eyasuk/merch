@@ -4,16 +4,33 @@
  */
 
 import express from 'express';
+import session from 'express-session';
+import passport from 'passport';
+import flash from 'express-flash';
 import * as path from 'path';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import authRouter from './routes/authRoute';
+import { initializePassport } from './utils/passport-config';
 
 dotenv.config();
+initializePassport(passport);
 const app = express();
 
 app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
+app.use(
+  session({
+    secret: 'ss',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to api!' });

@@ -9,7 +9,7 @@ export function validateInputs(req): ApiResponse {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     var errMsg = errors.mapped();
-    return { success: true, data: errMsg };
+    return { success: false, data: errMsg };
   }
   return { success: true, data: matchedData(req) };
 }
