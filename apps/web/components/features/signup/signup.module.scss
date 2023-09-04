@@ -1,0 +1,50 @@
+.signupBody {
+  display: flex;
+  height: 100%;
+  .advert {
+    display: block;
+    flex: 1;
+    background-color: rgb(107, 131, 91);
+  }
+  .signupMethods {
+    flex: 1.4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .button {
+      margin-bottom: 2vh;
+      max-width: 416px;
+      width: 100%;
+    }
+    .divider {
+      width: 80%;
+    }
+    .bottom {
+      min-height: 3vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1vh;
+      justify-content: space-between;
+    }
+  }
+}
+
+@media (max-width: 740px) {
+  .signupBody {
+    .advert {
+      display: none;
+    }
+    .signupMethods {
+      .button {
+        flex: 0 0 auto;
+        width: 100%;
+        margin: 2vh 10px;
+        max-width: 400px;
+        width: calc(100% - 20px);
+      }
+    }
+  }
+}
