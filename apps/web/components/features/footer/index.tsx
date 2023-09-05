@@ -1,9 +1,8 @@
 import Image from 'next/image';
-import { Button, Typography } from 'antd';
+import { Button } from 'antd';
+import { Title, Text } from 'components/elements/text';
 
 import styles from './footer.module.scss';
-
-const { Title, Text } = Typography;
 
 export default function FooterModule(): JSX.Element {
   return (

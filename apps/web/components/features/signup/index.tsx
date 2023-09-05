@@ -1,10 +1,16 @@
 'use client';
-import { Button, Divider, Typography } from 'antd';
 import { useState } from 'react';
+import Image from 'next/image';
+import { Button, Checkbox, Divider } from 'antd';
+import { BackIcon } from 'components/elements/icons';
+import { Text, Title } from 'components/elements/text';
+import {
+  SignInWithEmail,
+  SignInWithPhone,
+} from 'components/modules/signin_form';
+import logo from 'public/logo.svg';
 
 import styles from './signup.module.scss';
-
-const { Title, Text } = Typography;
 
 export default function SignUp() {
   const [openForm, setOpenForm] = useState<
@@ -18,11 +24,20 @@ export default function SignUp() {
       <div className={styles.signupMethods}>
         {openForm == 'choose' ? (
           <>
+            <Image src={logo} alt="logo of libes ltd" width={50} height={50} />
             <Title level={3}>Sign up to Libes</Title>
-            <Button className={styles.button} size="large">
+            <Button
+              className={styles.button}
+              size="large"
+              onClick={() => setOpenForm('withEmail')}
+            >
               Continue with Email{' '}
             </Button>
-            <Button className={styles.button} size="large">
+            <Button
+              className={styles.button}
+              size="large"
+              onClick={() => setOpenForm('withPhone')}
+            >
               Continue with Phone{' '}
             </Button>
             <div className={styles.divider}>
@@ -41,10 +56,25 @@ export default function SignUp() {
               </Text>
             </div>
           </>
-        ) : openForm == 'withEmail' ? (
-          <div></div>
         ) : (
-          <div> </div>
+          <>
+            <Button
+              className={styles.backButton}
+              icon={<BackIcon />}
+              onClick={() => {
+                setOpenForm('choose');
+              }}
+              shape="circle"
+            />
+            <div>
+              {' '}
+              {openForm == 'withEmail' ? (
+                <SignInWithEmail />
+              ) : (
+                <SignInWithPhone />
+              )}
+            </div>
+          </>
         )}
       </div>
     </div>

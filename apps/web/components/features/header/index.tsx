@@ -2,8 +2,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Button, Dropdown, Typography } from 'antd';
+import { Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
+import { Text } from 'components/elements/text';
 
 import logo from 'public/logo.svg';
 import {
@@ -15,7 +16,6 @@ import {
 
 import styles from './header.module.scss';
 
-const { Text } = Typography;
 const profileDropDown: MenuProps['items'] = [
   {
     key: '1',
