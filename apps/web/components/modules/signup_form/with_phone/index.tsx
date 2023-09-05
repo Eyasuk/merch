@@ -47,6 +47,9 @@ export default function SignInForm() {
     <div>
       <Title level={2}>Sign up to Libis</Title>
       <Form layout={'vertical'}>
+        <Form.Item label="Name">
+          <Input size="large" type="Name" />
+        </Form.Item>
         <Form.Item label="Phone No">
           <Input
             onChange={(e) => numberInputChanged(e.target.value)}
@@ -67,10 +70,17 @@ export default function SignInForm() {
             type="Password"
           />
         </Form.Item>
-
+        <Form.Item label="ReType Password">
+          <Input.Password size="large" />
+        </Form.Item>
+        <Form.Item>
+          <Checkbox>
+            I agree with Libes's Terms of Service, Privacy Policy
+          </Checkbox>
+        </Form.Item>
         <Form.Item>
           <Button type="primary" size="large">
-            Log in
+            Create Account
           </Button>
         </Form.Item>
       </Form>

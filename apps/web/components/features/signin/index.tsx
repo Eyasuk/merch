@@ -1,13 +1,13 @@
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
-import { Button, Checkbox, Divider } from 'antd';
+import { Button, Divider } from 'antd';
 import { BackIcon } from 'components/elements/icons';
 import { Text, Title } from 'components/elements/text';
 import {
   SignInWithEmail,
   SignInWithPhone,
-} from 'components/modules/signup_form';
+} from 'components/modules/signin_form';
 import logo from 'public/logo.svg';
 
 import styles from './signup.module.scss';
@@ -25,7 +25,7 @@ export default function SignUp() {
         {openForm == 'choose' ? (
           <>
             <Image src={logo} alt="logo of libes ltd" width={50} height={50} />
-            <Title level={3}>Sign up to Libes</Title>
+            <Title level={3}>Login to Libes</Title>
             <Button
               className={styles.button}
               size="large"
@@ -44,15 +44,11 @@ export default function SignUp() {
               <Divider />
             </div>
             <Button className={styles.button} type="primary" size="large">
-              Signup with Google{' '}
+              Signin with Google{' '}
             </Button>
             <div className={styles.bottom}>
-              <Text type="secondary">
-                By creating an account you agree with our Terms of Service and
-                Privacy Policy
-              </Text>
               <Text>
-                Already have an account? <a href="signin"> Sign in</a>
+                Create new account? <a href="signup"> Sign up</a>
               </Text>
             </div>
           </>

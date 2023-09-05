@@ -19,7 +19,7 @@ export function CommonLayout({ children }: Props): JSX.Element {
   return (
     <ConfigProvider theme={theme}>
       <Layout className={styles.body}>
-        {pathname !== '/login' && pathname !== '/signup' ? (
+        {pathname !== '/signin' && pathname !== '/signup' ? (
           <>
             <Header className={styles.header} children={<HeaderModule />} />
             <Content>{children}</Content>
