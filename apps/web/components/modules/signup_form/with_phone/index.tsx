@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   CountryCode,
-  formatIncompletePhoneNumber as formatPhoneNumber,
   parsePhoneNumber,
   getCountries,
-  getCountryCallingCode,
+  isValidNumberForRegion,
 } from 'libphonenumber-js';
 import { Button, Form, Input, Select } from 'antd';
 import { Title, Paragraph } from 'components/elements/text';
@@ -14,6 +13,17 @@ import styles from '../form.module.scss';
 export default function SignInForm() {
   const [form] = Form.useForm();
   const [countryCode, setCountryCode] = useState<CountryCode>('ET');
+  const [phoneNumber, setPhoneNumber] = useState<string>();
+
+  const validatePhone = (_: any, value: string) => {
+    if (!value || !isValidNumberForRegion(value, countryCode)) {
+      return Promise.reject('Enter valid phone number');
+    }
+    let parsed = parsePhoneNumber(value, countryCode);
+    setPhoneNumber(parsed.number);
+
+    return Promise.resolve();
+  };
 
   const countryOptions: { value: string; label: React.ReactElement }[] =
     getCountries().map((code: any) => {
@@ -41,15 +51,9 @@ export default function SignInForm() {
     return Promise.resolve();
   };
 
-  function numberInputChanged(phone: string) {
-    let parsed = parsePhoneNumber(phone, countryCode);
-    console.log(parsed);
-    console.log(getCountryCallingCode('ET'));
-    return parsed;
-  }
-
   function selectCountry(code: any) {
     setCountryCode(code);
+    form.validateFields(['phone']);
   }
 
   return (
@@ -68,11 +72,17 @@ export default function SignInForm() {
           className={styles.input}
           name="phone"
           label="Phone No"
-          rules={[{ required: true, message: 'Enter a phone' }]}
+          rules={[
+            { required: true, message: 'Enter a phone' },
+            {
+              validator: validatePhone,
+            },
+            {
+              validateTrigger: countryCode,
+            },
+          ]}
         >
           <Input
-            onChange={(e) => numberInputChanged(e.target.value)}
-            // value={value}
             addonBefore={
               <Select
                 options={countryOptions}
