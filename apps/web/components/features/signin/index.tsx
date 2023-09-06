@@ -10,7 +10,7 @@ import {
 } from 'components/modules/signin_form';
 import logo from 'public/logo.svg';
 
-import styles from './signup.module.scss';
+import styles from './signin.module.scss';
 
 export default function SignUp() {
   const [openForm, setOpenForm] = useState<
@@ -62,8 +62,7 @@ export default function SignUp() {
               }}
               shape="circle"
             />
-            <div>
-              {' '}
+            <div className={styles.form}>
               {openForm == 'withEmail' ? (
                 <SignInWithEmail />
               ) : (

@@ -6,9 +6,10 @@ import {
   getCountries,
   getCountryCallingCode,
 } from 'libphonenumber-js';
+import { Button, Form, Input, Select } from 'antd';
+import { Title, Paragraph } from 'components/elements/text';
 
-import { Button, Checkbox, Form, Input, Select } from 'antd';
-import { Title } from 'components/elements/text';
+import styles from '../form.module.scss';
 
 export default function SignInForm() {
   const [form] = Form.useForm();
@@ -32,6 +33,14 @@ export default function SignInForm() {
       };
     });
 
+  const validatePassword = (_: any, value: string) => {
+    if (value && value !== form.getFieldValue('password')) {
+      return Promise.reject('Passwords do not match');
+    }
+
+    return Promise.resolve();
+  };
+
   function numberInputChanged(phone: string) {
     let parsed = parsePhoneNumber(phone, countryCode);
     console.log(parsed);
@@ -46,11 +55,21 @@ export default function SignInForm() {
   return (
     <div>
       <Title level={2}>Sign up to Libis</Title>
-      <Form layout={'vertical'}>
-        <Form.Item label="Name">
+      <Form layout={'vertical'} form={form}>
+        <Form.Item
+          className={styles.input}
+          label="Name"
+          name="name"
+          rules={[{ required: true, message: 'Enter a name' }]}
+        >
           <Input size="large" type="Name" />
         </Form.Item>
-        <Form.Item label="Phone No">
+        <Form.Item
+          className={styles.input}
+          name="phone"
+          label="Phone No"
+          rules={[{ required: true, message: 'Enter a phone' }]}
+        >
           <Input
             onChange={(e) => numberInputChanged(e.target.value)}
             // value={value}
@@ -63,20 +82,36 @@ export default function SignInForm() {
             }
           />
         </Form.Item>
-        <Form.Item label="Password">
+        <Form.Item
+          className={styles.input}
+          name="password"
+          label="Password"
+          rules={[{ required: true, message: 'Enter a password' }]}
+        >
           <Input.Password
             size="large"
             placeholder="6+ characters"
             type="Password"
           />
         </Form.Item>
-        <Form.Item label="ReType Password">
+        <Form.Item
+          className={styles.input}
+          name="rePassword"
+          label="ReType Password"
+          rules={[
+            { required: true, message: 'Enter a password' },
+            {
+              validator: validatePassword,
+            },
+          ]}
+        >
           <Input.Password size="large" />
         </Form.Item>
-        <Form.Item>
-          <Checkbox>
-            I agree with Libes's Terms of Service, Privacy Policy
-          </Checkbox>
+        <Form.Item className={styles.input}>
+          <Paragraph type="secondary" ellipsis>
+            By creating an account on libes you are agreeing to Libes's Terms of
+            Service, Privacy Policy
+          </Paragraph>
         </Form.Item>
         <Form.Item>
           <Button type="primary" size="large">

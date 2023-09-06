@@ -1,4 +1,4 @@
-import SignInWithPhone from 'components/modules/signin_form/with_phone';
-import SignInWithEmail from 'components/modules/signin_form/with_email';
+import SignupWithPhone from 'components/modules/signup_form/with_phone';
+import SignupWithEmail from 'components/modules/signup_form/with_email';
 
-export { SignInWithEmail, SignInWithPhone };
+export { SignupWithEmail, SignupWithPhone };

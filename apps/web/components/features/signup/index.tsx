@@ -1,12 +1,12 @@
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
-import { Button, Checkbox, Divider } from 'antd';
+import { Button, Divider } from 'antd';
 import { BackIcon } from 'components/elements/icons';
 import { Text, Title } from 'components/elements/text';
 import {
-  SignInWithEmail,
-  SignInWithPhone,
+  SignupWithEmail,
+  SignupWithPhone,
 } from 'components/modules/signup_form';
 import logo from 'public/logo.svg';
 
@@ -66,12 +66,11 @@ export default function SignUp() {
               }}
               shape="circle"
             />
-            <div>
-              {' '}
+            <div className={styles.form}>
               {openForm == 'withEmail' ? (
-                <SignInWithEmail />
+                <SignupWithEmail />
               ) : (
-                <SignInWithPhone />
+                <SignupWithPhone />
               )}
             </div>
           </>

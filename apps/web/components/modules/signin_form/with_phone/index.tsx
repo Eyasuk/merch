@@ -61,11 +61,7 @@ export default function SignInForm() {
           />
         </Form.Item>
         <Form.Item label="Password">
-          <Input.Password
-            size="large"
-            placeholder="6+ characters"
-            type="Password"
-          />
+          <Input.Password size="large" type="Password" />
         </Form.Item>
 
         <Form.Item>
