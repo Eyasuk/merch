@@ -102,6 +102,7 @@ export default function SignInForm() {
             size="large"
             placeholder="6+ characters"
             type="Password"
+            minLength={6}
           />
         </Form.Item>
         <Form.Item
@@ -118,13 +119,13 @@ export default function SignInForm() {
           <Input.Password size="large" />
         </Form.Item>
         <Form.Item className={styles.input}>
-          <Paragraph type="secondary" ellipsis>
+          <Paragraph type="secondary">
             By creating an account on libes you are agreeing to Libes's Terms of
             Service, Privacy Policy
           </Paragraph>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" size="large">
+          <Button type="primary" size="large" htmlType="submit">
             Create Account
           </Button>
         </Form.Item>

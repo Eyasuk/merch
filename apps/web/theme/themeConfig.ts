@@ -6,8 +6,8 @@ const theme: ThemeConfig = {
     colorPrimary: '#22A39F',
     fontFamily: 'Helvetica Neue',
   },
-  algorithm: antdTheme.darkAlgorithm,
-  //algorithm: antdTheme.defaultAlgorithm,
+  // algorithm: antdTheme.darkAlgorithm,
+  algorithm: antdTheme.defaultAlgorithm,
 };
 
 export default theme;
