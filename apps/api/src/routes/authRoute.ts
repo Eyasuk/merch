@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import passport from 'passport';
 import {
+  checkAuth,
   checkAuthenticated,
   checkNotAuthenticated,
 } from '../middleware/auth.middleware';
@@ -11,19 +11,25 @@ import {
 } from '../middleware/validation-rule';
 import * as auth from '../controllers/auth.controller';
 
-const router = Router();
+const authRouter = (passport) => {
+  const router = Router();
 
-router.post(
-  '/login',
-  checkNotAuthenticated,
-  loginHandleValidator,
-  auth.loginHandle,
-  passport.authenticate('local', {
-    successRedirect: '/api1',
-    failureRedirect: '/api',
-    failureFlash: true,
-  })
-);
+  router.post(
+    '/login',
+    checkNotAuthenticated,
+    loginHandleValidator,
+    auth.loginHandle
+  );
 
-router.post('/register', registerHandleValidator, auth.registerHandle);
-export default router;
+  router.post('/check', checkAuth);
+  router.post(
+    '/register',
+    checkNotAuthenticated,
+    registerHandleValidator,
+    auth.registerHandle
+  );
+
+  return router;
+};
+
+export default authRouter;

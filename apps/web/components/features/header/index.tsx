@@ -2,46 +2,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Button, Dropdown } from 'antd';
-import type { MenuProps } from 'antd';
+import { Button } from 'antd';
 import { Text } from 'components/elements/text';
-
-import logo from 'public/logo.svg';
 import {
   CartIcon,
   LanguageIcon,
   ProfileIcon,
   SearchIcon,
 } from 'components/elements/icons';
+import ProfileMenu from 'components/modules/profile_menu';
+import logo from 'public/logo.svg';
 
 import styles from './header.module.scss';
-
-const profileDropDown: MenuProps['items'] = [
-  {
-    key: '1',
-    label: (
-      <a rel="noopener noreferrer" href="https://www.antgroup.com">
-        login{' '}
-      </a>
-    ),
-  },
-  {
-    key: '2',
-    label: (
-      <a rel="noopener noreferrer" href="https://www.aliyun.com">
-        2nd menu item
-      </a>
-    ),
-  },
-  {
-    key: '3',
-    label: (
-      <a rel="noopener noreferrer" href="https://www.luohanacademy.com">
-        3rd menu item
-      </a>
-    ),
-  },
-];
 
 export default function HeaderModule(): JSX.Element {
   const pathname = usePathname();
@@ -88,9 +60,9 @@ export default function HeaderModule(): JSX.Element {
         <Button type="text" icon={<SearchIcon />} />
         <Button type="text" icon={<CartIcon />} />
         <Button type="text" icon={<LanguageIcon />} />
-        <Dropdown menu={{ items: profileDropDown }}>
+        <ProfileMenu>
           <Button type="default" icon={<ProfileIcon />} />
-        </Dropdown>
+        </ProfileMenu>
       </div>
     </div>
   );

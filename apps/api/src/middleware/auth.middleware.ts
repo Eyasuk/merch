@@ -22,3 +22,12 @@ export function checkNotAuthenticated(
   }
   next();
 }
+
+export function checkAuth(req: Request, res: Response, next: NextFunction) {
+  console.log(req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    res.status(200).json({ isLoggedIn: true });
+  } else {
+    res.status(401).json({ isLoggedIn: false });
+  }
+}

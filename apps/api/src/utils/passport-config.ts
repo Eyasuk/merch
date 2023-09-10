@@ -28,13 +28,7 @@ export function initializePassport(passport) {
   passport.use(new passportLocal.Strategy({ usernameField: 'id' }, authUser));
   passport.serializeUser((user, done) => done(null, user.id));
   passport.deserializeUser(async (id, done) => {
-    const user = await User.findOne({ id: id });
+    const user = await User.findById(id);
     return done(null, user);
   });
 }
-
-// function configurePassport(passport: passport.Passport) {
-//   passport.use(
-//     new passportLocal.Strategy(authhenticateUser, { usernameField: 'email' })
-//   );
-// }
