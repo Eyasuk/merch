@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   CountryCode,
   parsePhoneNumber,
@@ -7,13 +8,34 @@ import {
 } from 'libphonenumber-js';
 import { Button, Form, Input, Select } from 'antd';
 import { Title, Paragraph } from 'components/elements/text';
+import { signupWithPhoneService } from 'utils/services/authService';
+import { useAuth } from 'utils/contexts/auth';
 
 import styles from '../form.module.scss';
 
 export default function SignInForm() {
+  const router = useRouter();
   const [form] = Form.useForm();
+  const { setUserLoggedIn } = useAuth();
   const [countryCode, setCountryCode] = useState<CountryCode>('ET');
   const [phoneNumber, setPhoneNumber] = useState<string>();
+
+  const signUp = async (value: any) => {
+    try {
+      const res = await signupWithPhoneService(
+        phoneNumber ?? '',
+        value.name,
+        value.password
+      );
+      if (res.status == 200) {
+        setUserLoggedIn(true);
+        router.push('/');
+      }
+    } catch (err) {
+      console.log('err');
+      console.log(err);
+    }
+  };
 
   const validatePhone = (_: any, value: string) => {
     if (!value || !isValidNumberForRegion(value, countryCode)) {
@@ -59,7 +81,7 @@ export default function SignInForm() {
   return (
     <div>
       <Title level={2}>Sign up to Libis</Title>
-      <Form layout={'vertical'} form={form}>
+      <Form layout={'vertical'} form={form} onFinish={signUp}>
         <Form.Item
           className={styles.input}
           label="Name"
