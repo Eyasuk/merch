@@ -22,7 +22,7 @@ export default function SignInForm() {
 
   const signIn = async (value: any) => {
     try {
-      const res = await signInService(value.email, value.password);
+      const res = await signInService(phoneNumber ?? '', value.password);
       if (res.status == 200) {
         setUserLoggedIn(true);
         router.push('/');
@@ -67,7 +67,7 @@ export default function SignInForm() {
 
   return (
     <div>
-      <Title level={2}>Sign up to Libis</Title>
+      <Title level={2}>Sign in to Libis</Title>
       <Form layout={'vertical'} form={form} onFinish={signIn}>
         <Form.Item
           name="phone"
@@ -101,8 +101,8 @@ export default function SignInForm() {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" size="large">
-            Log in
+          <Button type="primary" size="large" htmlType="submit">
+            Sign in
           </Button>
         </Form.Item>
       </Form>
