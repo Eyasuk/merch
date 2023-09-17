@@ -24,10 +24,9 @@ export function checkNotAuthenticated(
 }
 
 export function checkAuth(req: Request, res: Response, next: NextFunction) {
-  console.log(req.isAuthenticated());
   if (req.isAuthenticated()) {
-    res.status(200).json({ isLoggedIn: true });
+    return res.status(200).json({ isLoggedIn: true });
   } else {
-    res.status(401).json({ isLoggedIn: false });
+    return res.status(200).json({ isLoggedIn: false });
   }
 }

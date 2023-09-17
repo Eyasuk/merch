@@ -4,7 +4,6 @@ import { ConfigProvider, Layout } from 'antd';
 import theme from 'theme/themeConfig';
 import FooterModule from 'components/features/footer';
 import HeaderModule from 'components/features/header';
-import { UserProvider } from 'utils/contexts/auth';
 
 import styles from './common_layout.module.scss';
 
@@ -20,19 +19,17 @@ export function CommonLayout({ children }: Props): JSX.Element {
   return (
     <ConfigProvider theme={theme}>
       <Layout className={styles.body}>
-        <UserProvider>
-          {pathname !== '/signin' && pathname !== '/signup' ? (
-            <>
-              <Header className={styles.header} children={<HeaderModule />} />
-              <Content>{children}</Content>
-              <Footer>
-                <FooterModule />
-              </Footer>
-            </>
-          ) : (
-            children
-          )}
-        </UserProvider>
+        {pathname !== '/signin' && pathname !== '/signup' ? (
+          <>
+            <Header className={styles.header} children={<HeaderModule />} />
+            <Content>{children}</Content>
+            <Footer>
+              <FooterModule />
+            </Footer>
+          </>
+        ) : (
+          children
+        )}
       </Layout>
     </ConfigProvider>
   );

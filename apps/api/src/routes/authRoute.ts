@@ -29,6 +29,7 @@ const authRouter = (passport) => {
     auth.registerHandle
   );
 
+  router.post('/logout', auth.logout);
   return router;
 };
 

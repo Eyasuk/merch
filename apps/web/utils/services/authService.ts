@@ -39,9 +39,14 @@ export async function signInService(id: string, password: string) {
 export async function userSessionService() {
   try {
     const response = await axiosApiInstance.post('/auth/check');
-
-    return response.data.isLoggedIn;
-  } catch (err) {
+    if (response.data) return response.data.isLoggedIn;
+    else return false;
+  } catch (error: any) {
     return false;
   }
+}
+
+export async function signOutService() {
+  const response = await axiosApiInstance.post('/auth/logout');
+  return response;
 }

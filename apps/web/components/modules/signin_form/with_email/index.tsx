@@ -2,15 +2,18 @@ import { useRouter } from 'next/navigation';
 import { Button, Form, Input } from 'antd';
 import { Title } from 'components/elements/text';
 import { signInService } from 'utils/services/authService';
+import { useAuth } from 'utils/contexts/auth';
 
 export default function SignInForm() {
   const router = useRouter();
   const [form] = Form.useForm();
+  const { setUserLoggedIn } = useAuth();
 
   const signIn = async (value: any) => {
     try {
       const res = await signInService(value.email, value.password);
       if (res.status == 200) {
+        setUserLoggedIn(true);
         router.push('/');
       }
     } catch (err) {

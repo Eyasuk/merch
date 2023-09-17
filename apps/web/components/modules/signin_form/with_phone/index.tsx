@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button, Form, Input, Select } from 'antd';
 import {
   CountryCode,
   formatIncompletePhoneNumber as formatPhoneNumber,
@@ -6,15 +8,30 @@ import {
   getCountries,
   isValidNumberForRegion,
 } from 'libphonenumber-js';
-
-import { Button, Form, Input, Select } from 'antd';
 import { Title } from 'components/elements/text';
+import { useAuth } from 'utils/contexts/auth';
+import { signInService } from 'utils/services/authService';
 
 export default function SignInForm() {
   const [form] = Form.useForm();
+  const router = useRouter();
+  const { setUserLoggedIn } = useAuth();
+
   const [countryCode, setCountryCode] = useState<CountryCode>('ET');
   const [phoneNumber, setPhoneNumber] = useState<string>();
 
+  const signIn = async (value: any) => {
+    try {
+      const res = await signInService(value.email, value.password);
+      if (res.status == 200) {
+        setUserLoggedIn(true);
+        router.push('/');
+      }
+    } catch (err) {
+      console.log('err');
+      console.log(err);
+    }
+  };
   const validatePhone = (_: any, value: string) => {
     if (!value || !isValidNumberForRegion(value, countryCode)) {
       return Promise.reject('Enter valid phone number');
@@ -51,7 +68,7 @@ export default function SignInForm() {
   return (
     <div>
       <Title level={2}>Sign up to Libis</Title>
-      <Form layout={'vertical'} form={form}>
+      <Form layout={'vertical'} form={form} onFinish={signIn}>
         <Form.Item
           name="phone"
           label="Phone No"

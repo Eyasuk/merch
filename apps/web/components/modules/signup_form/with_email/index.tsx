@@ -1,12 +1,31 @@
+import { useRouter } from 'next/navigation';
 import { Button, Form, Input } from 'antd';
 import { Title, Paragraph } from 'components/elements/text';
+import { signupWithEmailService } from 'utils/services/authService';
+import { useAuth } from 'utils/contexts/auth';
 
 import styles from '../form.module.scss';
 
 export default function SignInForm() {
+  const router = useRouter();
   const [form] = Form.useForm();
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
+  const { setUserLoggedIn } = useAuth();
+
+  const signUp = async (value: any) => {
+    try {
+      const res = await signupWithEmailService(
+        value.email,
+        value.name,
+        value.password
+      );
+      if (res.status == 200) {
+        setUserLoggedIn(true);
+        router.push('/');
+      }
+    } catch (err) {
+      console.log('err');
+      console.log(err);
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -26,19 +45,19 @@ export default function SignInForm() {
       <Title level={2}>Sign up to Libis</Title>
       <Form
         layout={'vertical'}
-        onFinish={onFinish}
+        onFinish={signUp}
         onFinishFailed={onFinishFailed}
         form={form}
       >
         <Form.Item
-          name="Name"
+          name="name"
           label="Name"
           rules={[{ required: true, message: 'Enter a name' }]}
         >
           <Input size="large" type="Name" />
         </Form.Item>
         <Form.Item
-          name="Email"
+          name="email"
           label="Email"
           rules={[{ required: true, message: 'Enter a email' }]}
         >

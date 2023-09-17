@@ -2,6 +2,8 @@ import React from 'react';
 import { Inter } from 'next/font/google';
 import StyledComponentsRegistry from '../lib/AntdRegistry';
 import { CommonLayout } from 'components/layouts/common';
+import { AuthProvider } from 'utils/contexts/auth';
+
 import './global.css';
 
 export const metadata = {
@@ -18,11 +20,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <StyledComponentsRegistry>
-          <CommonLayout>{children}</CommonLayout>
-        </StyledComponentsRegistry>
-      </body>
+      <StyledComponentsRegistry>
+        <body className={inter.className}>
+          <AuthProvider>
+            <CommonLayout>{children}</CommonLayout>
+          </AuthProvider>
+        </body>
+      </StyledComponentsRegistry>
     </html>
   );
 }

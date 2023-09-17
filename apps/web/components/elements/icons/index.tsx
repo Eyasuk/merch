@@ -4,6 +4,9 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
   UserOutlined,
+  SkinOutlined,
+  QuestionOutlined,
+  BarsOutlined,
 } from '@ant-design/icons';
 
 export function BackIcon({ ...props }: any) {
@@ -23,5 +26,17 @@ export function LanguageIcon({ ...props }: any) {
 }
 
 export function ProfileIcon({ ...props }: any) {
-  return <UserOutlined />;
+  return <UserOutlined {...props} />;
+}
+
+export function CreateIcon({ ...props }: any) {
+  return <SkinOutlined {...props} />;
+}
+
+export function HelpIcon({ ...props }: any) {
+  return <QuestionOutlined {...props} />;
+}
+
+export function OrderIcon({ ...props }: any) {
+  return <BarsOutlined {...props} />;
 }

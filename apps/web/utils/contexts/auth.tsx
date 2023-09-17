@@ -20,7 +20,7 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-export const UserProvider = ({ children }: AuthProviderProps): JSX.Element => {
+export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const router = useRouter();
   const currentPath = usePathname();
 
@@ -36,6 +36,9 @@ export const UserProvider = ({ children }: AuthProviderProps): JSX.Element => {
   };
 
   useEffect(() => {
+    console.log('this cold');
+    console.log(userLoggedIn);
+
     redirectTo(currentPath ?? '/');
   }, []);
 

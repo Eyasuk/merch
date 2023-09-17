@@ -44,12 +44,16 @@ export async function registerHandle(
   }
   const userData = result.data;
 
-  let potentialUser = await User.findOne({
-    $or: [{ email: userData.email }, { phone: userData.phone }],
-  });
+  let potentialUser = true;
 
-  if (potentialUser) {
-    return res.status(422).json({
+  if (
+    (userData.email && (await User.findOne({ email: userData.email }))) ||
+    (userData.phone && (await User.findOne({ email: userData.phone })))
+  )
+    potentialUser = false;
+
+  if (!potentialUser) {
+    return res.status(409).json({
       message: 'user already exists',
       error: true,
     });
@@ -61,22 +65,31 @@ export async function registerHandle(
     firstName: userData.first_name,
     password: hashedPassword,
   });
-  user.save();
+  await user.save();
   req.logIn(user, (err) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
-    return res.status(201).json(user);
+    req.session.save(() => {
+      return res.status(200).json(user);
+    });
   });
 }
 
 export function checkAuth(req: Request, res: Response, next: NextFunction) {
-  console.log(req.session);
-
   if (req.isAuthenticated()) {
-    res.json({ isLoggedIn: true });
+    res.status(200).json({ isLoggedIn: true });
   } else {
-    res.json({ isLoggedIn: false });
+    res.status(401).json({ isLoggedIn: false });
   }
   next();
+}
+
+export function logout(req: Request, res: Response, next: NextFunction) {
+  req.logout(function (err) {
+    if (err) {
+      return res.status(500).json({ success: false });
+    }
+    return res.status(200).json({ success: true });
+  });
 }
