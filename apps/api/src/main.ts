@@ -9,12 +9,10 @@ import session from 'express-session';
 import passport, { PassportStatic } from 'passport';
 import * as path from 'path';
 import mongoose from 'mongoose';
+import MongoStore from 'connect-mongo';
 import * as dotenv from 'dotenv';
 import authRouter from './routes/authRoute';
 import { initializePassport } from './utils/passport-config';
-import { checkNotAuthenticated } from './middleware/auth.middleware';
-import { loginHandleValidator } from './middleware/validation-rule';
-import * as auth from './controllers/auth.controller';
 
 // declare module 'express' {
 //   interface Request {
@@ -41,6 +39,14 @@ const app = express();
 //   })
 // );
 
+const mongoUri = process.env.MONGO_DB_URI;
+mongoose.connect(mongoUri);
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log('Database connected successfully');
+});
+
 app.use(
   cors({
     origin: ['http://localhost:4200', 'http://127.0.0.1:4200'], // Replace with the actual origin of your frontend application
@@ -48,6 +54,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
@@ -55,18 +62,23 @@ app.use(
   session({
     secret: 'ss',
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
       secure: false,
       httpOnly: true,
       maxAge: 3600000, // Set the desired max age for the session cookie
     },
+    store: MongoStore.create({
+      client: db.getClient(),
+      collectionName: 'session',
+      stringify: false,
+      autoRemove: 'interval',
+      autoRemoveInterval: 1,
+    }),
   })
 );
 
-//localhost:4200/
-
-http: app.use(passport.initialize());
+app.use(passport.initialize());
 app.use(passport.session());
 initializePassport(passport);
 app.use((req, res, next) => {
@@ -82,14 +94,6 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/auth', authRouter(passport));
-
-const mongoUri = process.env.MONGO_DB_URI;
-mongoose.connect(mongoUri);
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-  console.log('Database connected successfully');
-});
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {

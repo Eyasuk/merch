@@ -1,9 +1,7 @@
 'use client';
 import { usePathname } from 'next/navigation';
 import { ConfigProvider, Layout } from 'antd';
-import theme from 'theme/themeConfig';
-import FooterModule from 'components/features/footer';
-import HeaderModule from 'components/features/header';
+// import theme from 'theme/themeConfig';
 
 import styles from './common_layout.module.scss';
 
@@ -17,15 +15,11 @@ export function CommonLayout({ children }: Props): JSX.Element {
   const pathname = usePathname();
 
   return (
-    <ConfigProvider theme={theme}>
+    <ConfigProvider>
       <Layout className={styles.body}>
         {pathname !== '/signin' && pathname !== '/signup' ? (
           <>
-            <Header className={styles.header} children={<HeaderModule />} />
             <Content>{children}</Content>
-            <Footer>
-              <FooterModule />
-            </Footer>
           </>
         ) : (
           children
