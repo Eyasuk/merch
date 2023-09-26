@@ -71,6 +71,7 @@ app.use(
     resave: true,
     saveUninitialized: false,
     cookie: {
+      sameSite: 'strict',
       secure: false,
       httpOnly: true,
       maxAge: 3600000, // Set the desired max age for the session cookie
