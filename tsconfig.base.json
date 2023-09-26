@@ -14,16 +14,17 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@merch/shared": ["../../libs/shared/src/index.ts"],
+    }
   },
-  
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    "../../apps/web/.next/types/**/*.ts",
-    "../../dist/apps/web/.next/types/**/*.ts",
+    "apps/web/.next/types/**/*.ts",
+    "dist/apps/web/.next/types/**/*.ts",
     "next-env.d.ts"
   ],
   "exclude": [

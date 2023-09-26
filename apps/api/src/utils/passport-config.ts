@@ -26,9 +26,11 @@ export function initializePassport(passport) {
   };
 
   passport.use(new passportLocal.Strategy({ usernameField: 'id' }, authUser));
-  passport.serializeUser((user, done) => done(null, user.id));
-  passport.deserializeUser(async (id, done) => {
-    const user = await User.findById(id);
+  passport.serializeUser((user, done) =>
+    done(null, { id: user.id, role: user.role })
+  );
+  passport.deserializeUser(async (u, done) => {
+    const user = await User.findById(u.id);
     return done(null, user);
   });
 }

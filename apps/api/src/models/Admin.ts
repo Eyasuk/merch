@@ -1,6 +1,13 @@
-import Mongoose from 'mongoose';
+import { Document, Model, Schema, model } from 'mongoose';
 
-const AdminSchema = new Mongoose.Schema({
+export interface AdminDocument extends Document {
+  email?: string;
+  phone?: string;
+  firstName: string;
+  password: string;
+}
+
+const AdminSchema = new Schema({
   email: {
     type: String,
     unique: true,
@@ -9,7 +16,6 @@ const AdminSchema = new Mongoose.Schema({
   phone: {
     type: String,
     unique: true,
-    required: true,
   },
   password: {
     type: String,
@@ -21,5 +27,5 @@ const AdminSchema = new Mongoose.Schema({
   },
 });
 
-const Admin = Mongoose.model('admin', AdminSchema);
+const Admin = model('admin', AdminSchema);
 export default Admin;

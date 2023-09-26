@@ -29,16 +29,21 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const redirectTo = async (path: string): Promise<void> => {
     const userSession = await userSessionService();
     setUserLoggedIn(userSession);
+    if (
+      userSession &&
+      Object.values(Routes.authenticationRoutes).includes(path)
+    ) {
+      router.push('/');
+      return;
+    }
 
-    if (!userSession && Object.values(Routes.authorizedRoutes).includes(path)) {
+    if (!userSession) {
       router.push('/signin');
+      return;
     }
   };
 
   useEffect(() => {
-    console.log('this cold');
-    console.log(userLoggedIn);
-
     redirectTo(currentPath ?? '/');
   }, []);
 

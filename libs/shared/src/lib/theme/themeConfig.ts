@@ -1,13 +1,11 @@
 import { ThemeConfig, theme as antdTheme } from 'antd';
 
-const theme: ThemeConfig = {
+export const theme: ThemeConfig = {
   token: {
     fontSize: 16,
     colorPrimary: '#22A39F',
     fontFamily: 'Helvetica Neue',
   },
-  // algorithm: antdTheme.darkAlgorithm,
-  algorithm: antdTheme.defaultAlgorithm,
+  algorithm: antdTheme.darkAlgorithm,
+  // algorithm: antdTheme.defaultAlgorithm,
 };
-
-export default theme;

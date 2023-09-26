@@ -11,7 +11,9 @@ import * as path from 'path';
 import mongoose from 'mongoose';
 import MongoStore from 'connect-mongo';
 import * as dotenv from 'dotenv';
-import authRouter from './routes/authRoute';
+import userAuthRouter from './routes/user/authRoute';
+import adminAuthRouter from './routes/admin/authRoute';
+
 import { initializePassport } from './utils/passport-config';
 
 // declare module 'express' {
@@ -49,7 +51,12 @@ db.once('open', function () {
 
 app.use(
   cors({
-    origin: ['http://localhost:4200', 'http://127.0.0.1:4200'], // Replace with the actual origin of your frontend application
+    origin: [
+      'http://localhost:4200',
+      'http://127.0.0.1:4200',
+      'http://127.0.0.1:4201',
+      'http://localhost:4201',
+    ], // Replace with the actual origin of your frontend application
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     credentials: true,
   })
@@ -78,22 +85,24 @@ app.use(
   })
 );
 
+initializePassport(passport);
+
 app.use(passport.initialize());
 app.use(passport.session());
-initializePassport(passport);
 app.use((req, res, next) => {
   req.passport = passport; // Attach passport object to the request
   next();
 });
 
-app.get('/api', (req, res) => {
-  res.send({
-    message: 'Welcome to api!',
-    userLoggedIn: req.isUnauthenticated(),
-  });
-});
+// app.use('/admin', adminPassport.initialize());
+// app.use('/admin', adminPassport.session());
+// app.use('/admin', (req, res, next) => {
+//   req.passport = adminPassport; // Attach passport object to the request
+//   next();
+// });
 
-app.use('/auth', authRouter(passport));
+app.use('/', userAuthRouter);
+app.use('/admin', adminAuthRouter);
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {

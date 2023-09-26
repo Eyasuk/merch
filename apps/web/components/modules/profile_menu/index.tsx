@@ -123,8 +123,6 @@ export default function ProfileMenu({ children }: Props): JSX.Element {
     }
   }
 
-  console.log({ porf: userLoggedIn });
-
   return (
     <Dropdown
       menu={

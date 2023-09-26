@@ -5,11 +5,13 @@
   "scripts": {
     "main_dev": "nx run web:serve:development --port=4200",
     "api_dev": "nx run api:serve:development",
-    "admin_dev":"nx run admin:serve:development --port=4201",
-    "creator_dev":"nx run creator:serve:development --port=4202"
+    "admin_dev": "nx run admin:serve:development --port=4201",
+    "creator_dev": "nx run creator:serve:development --port=4202"
   },
   "private": true,
   "devDependencies": {
+    "@babel/core": "^7.14.5",
+    "@babel/preset-react": "^7.14.5",
     "@nrwl/express": "^16.7.4",
     "@nx/eslint-plugin": "16.7.2",
     "@nx/express": "16.7.4",

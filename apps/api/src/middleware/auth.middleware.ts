@@ -9,7 +9,7 @@ export function checkAuthenticated(
     return next();
   }
 
-  res.redirect('/login');
+  res.status(401).json({ message: 'not authorized' });
 }
 
 export function checkNotAuthenticated(
@@ -18,15 +18,16 @@ export function checkNotAuthenticated(
   next: NextFunction
 ) {
   if (req.isAuthenticated()) {
-    return res.redirect('/api');
+    return res.status(200).json(req.user);
   }
   next();
 }
 
-export function checkAuth(req: Request, res: Response, next: NextFunction) {
-  if (req.isAuthenticated()) {
-    return res.status(200).json({ isLoggedIn: true });
+export function checkAdmin(req: Request, res: Response, next: NextFunction) {
+  const { role } = req.user;
+  if (role == 'admin') {
+    next();
   } else {
-    return res.status(200).json({ isLoggedIn: false });
+    return res.status(401).json({ message: 'not authorized', a: role });
   }
 }
