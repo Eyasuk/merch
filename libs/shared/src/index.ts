@@ -1,3 +1,3 @@
-export * from './lib/antd-text/antd-text';
-export * from './lib/theme/themeConfig';
-export * from './lib/shared';
+export { Link, Paragraph, Text, Title } from './lib/antd-text/antd-text';
+export { theme } from './lib/theme/themeConfig';
+export { Shared } from './lib/shared';

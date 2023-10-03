@@ -25,7 +25,12 @@ export default function SignInForm() {
   return (
     <div>
       <Title level={2}>Sign in to Libis</Title>
-      <Form layout={'vertical'} form={form} onFinish={signIn}>
+      <Form
+        layout={'vertical'}
+        name="signinWithEmail"
+        form={form}
+        onFinish={signIn}
+      >
         <Form.Item
           name="email"
           label="Email"

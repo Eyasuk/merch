@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 import { validateInputs } from '../utils/validateForm';
-import Admin from '../models/Admin';
 import User from '../models/User';
 
 export async function userLoginHandle(
@@ -102,49 +101,6 @@ export async function userRegisterHandle(
     }
     req.session.save(() => {
       return res.status(200).json(user);
-    });
-  });
-}
-
-export async function adminRegisterHandle(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const result = validateInputs(req);
-  if (!result.success) {
-    return res.status(422).json({ errors: result.data });
-  }
-  const userData = result.data;
-
-  let potentialUser = true;
-
-  if (
-    (userData.email && (await Admin.findOne({ email: userData.email }))) ||
-    (userData.phone && (await Admin.findOne({ email: userData.phone })))
-  )
-    potentialUser = false;
-
-  if (!potentialUser) {
-    return res.status(409).json({
-      message: 'user already exists',
-      error: true,
-    });
-  }
-  const hashedPassword = await bcrypt.hash(userData.password, 10);
-  const admin = new Admin({
-    email: userData.email,
-    phone: userData.phone,
-    firstName: userData.first_name,
-    password: hashedPassword,
-  });
-  await admin.save();
-  req.logIn(admin, (err) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    req.session.save(() => {
-      return res.status(200).json(admin);
     });
   });
 }

@@ -6,10 +6,10 @@ export function checkAuthenticated(
   next: NextFunction
 ) {
   if (req.isAuthenticated()) {
-    return next();
+    next();
+  } else {
+    return res.status(401).json({ message: 'not authenticated' });
   }
-
-  res.status(401).json({ message: 'not authorized' });
 }
 
 export function checkNotAuthenticated(
@@ -24,10 +24,9 @@ export function checkNotAuthenticated(
 }
 
 export function checkAdmin(req: Request, res: Response, next: NextFunction) {
-  const { role } = req.user;
-  if (role == 'admin') {
+  if (req.user && req.user.role == 'admin') {
     next();
   } else {
-    return res.status(401).json({ message: 'not authorized', a: role });
+    return res.status(401).json({ message: 'not authorized' });
   }
 }

@@ -13,8 +13,10 @@ import MongoStore from 'connect-mongo';
 import * as dotenv from 'dotenv';
 import userAuthRouter from './routes/user/authRoute';
 import adminAuthRouter from './routes/admin/authRoute';
+import advertRouter from './routes/advert/advertRoute';
 
 import { initializePassport } from './utils/passport-config';
+import { startChangeStream } from './utils/changeStreams';
 
 // declare module 'express' {
 //   interface Request {
@@ -45,8 +47,9 @@ const mongoUri = process.env.MONGO_DB_URI;
 mongoose.connect(mongoUri);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
+db.once('open', async function () {
   console.log('Database connected successfully');
+  await startChangeStream();
 });
 
 app.use(
@@ -104,6 +107,7 @@ app.use((req, res, next) => {
 
 app.use('/', userAuthRouter);
 app.use('/admin', adminAuthRouter);
+app.use('/advert', advertRouter);
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {

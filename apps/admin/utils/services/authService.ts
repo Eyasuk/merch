@@ -18,7 +18,7 @@ export async function signupWithEmailService(
   name: string,
   password: string
 ) {
-  const response = await axiosApiInstance.post('/register', {
+  const response = await axiosApiInstance.post('/admin/register', {
     email,
     first_name: name,
     password,
@@ -28,7 +28,7 @@ export async function signupWithEmailService(
 }
 
 export async function signInService(id: string, password: string) {
-  const response = await axiosApiInstance.post('/login', {
+  const response = await axiosApiInstance.post('/admin/login', {
     id,
     password,
   });
@@ -41,7 +41,7 @@ export async function signInService(id: string, password: string) {
 
 export async function userSessionService() {
   try {
-    const response = await axiosApiInstance.post('/check');
+    const response = await axiosApiInstance.post('/admin/check');
     console.log(response);
     if (response.data) return response.data.isLoggedIn;
     else return false;
@@ -51,6 +51,6 @@ export async function userSessionService() {
 }
 
 export async function signOutService() {
-  const response = await axiosApiInstance.post('/logout');
+  const response = await axiosApiInstance.post('/admin/logout');
   return response;
 }

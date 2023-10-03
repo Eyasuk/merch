@@ -4,7 +4,7 @@ import { checkNotAuthenticated } from '../../middleware/auth.middleware';
 import {
   registerHandleValidator,
   loginHandleValidator,
-} from '../../middleware/validation-rule';
+} from '../../middleware/validation/authValidation';
 import * as auth from '../../controllers/auth.controller';
 
 const router = Router();
