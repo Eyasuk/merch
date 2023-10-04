@@ -1,9 +1,13 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Button, Badge, Table } from 'antd';
+import { Button, Badge, Table, Modal, Popconfirm } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { getAdvertService } from 'utils/services/advertService';
+import {
+  getAdvertService,
+  deleteAdvertService,
+  editAdvertService,
+} from 'utils/services/advertService';
 
 import styles from './advert_list.module.scss';
 
@@ -13,25 +17,23 @@ interface DataType {
   alt: string;
   image: string;
   status: boolean;
+  _id: string;
 }
 
 export function AdvertList(): JSX.Element {
-  const [advertData, setAdvertData] = useState();
+  const [advertData, setAdvertData] = useState<DataType[]>();
 
   useEffect(() => {
     const setData = async () => {
       try {
         const response = await getAdvertService(0, 5);
-        console.log(response);
         const data = response.data.data.data.map((item: any) => {
           return {
             key: item._id,
             ...item,
           };
         });
-        console.log(data);
         setAdvertData(data);
-        console.log(advertData);
       } catch (err) {
         console.log(err);
       }
@@ -47,10 +49,28 @@ export function AdvertList(): JSX.Element {
       title: 'Action',
       dataIndex: '',
       key: 'action',
-      render: () => (
+      render: (value) => (
         <span className={styles.actions}>
-          <Button>delete</Button>
-          <Button>change status</Button>
+          <Popconfirm
+            title="Delete the advert"
+            description="Are you sure to delete this advert?"
+            onConfirm={() => deleteAdvert(value._id)}
+            // onCancel={null}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger>Delete</Button>
+          </Popconfirm>
+          <Popconfirm
+            title="Change status"
+            description="Are you sure to change the status of this advert?"
+            onConfirm={() => editAdvert(value._id)}
+            // onCancel={null}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button>Change Status</Button>
+          </Popconfirm>
         </span>
       ),
     },
@@ -63,22 +83,49 @@ export function AdvertList(): JSX.Element {
       },
     },
   ];
+  const editAdvert = async (value: string) => {
+    try {
+      const response = await editAdvertService(value);
+      setAdvertData((prevData) => {
+        if (prevData) {
+          return prevData.map((row: DataType) => {
+            return row._id == value
+              ? { ...row, status: response.data.data.status }
+              : row;
+          });
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteAdvert = async (value: string) => {
+    try {
+      const response = await deleteAdvertService(value);
+      setAdvertData((prevData) => prevData?.filter((row) => row._id != value));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
-    <Table
-      className={styles.body}
-      columns={columns}
-      expandable={{
-        expandedRowRender: (record) => (
-          <Image
-            alt="Base64 Image"
-            width={400}
-            height={300}
-            src={record.image}
-          />
-        ),
-      }}
-      dataSource={advertData}
-    />
+    <>
+      <Table
+        className={styles.body}
+        columns={columns}
+        expandable={{
+          expandedRowRender: (record) => (
+            <Image
+              alt="Base64 Image"
+              width={400}
+              height={300}
+              src={record.image}
+            />
+          ),
+        }}
+        dataSource={advertData}
+      />
+    </>
   );
 }

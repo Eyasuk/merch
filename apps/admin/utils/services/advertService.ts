@@ -19,3 +19,13 @@ export async function getAdvertService(page: number, limit: number) {
   });
   return response;
 }
+
+export async function deleteAdvertService(id: string) {
+  const response = await axiosApiInstance.delete('/advert', { data: { id } });
+  return response;
+}
+
+export async function editAdvertService(id: string) {
+  const response = await axiosApiInstance.put('/advert', { id });
+  return response;
+}
