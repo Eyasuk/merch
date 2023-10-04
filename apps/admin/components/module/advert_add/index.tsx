@@ -10,8 +10,9 @@ import styles from './advert_add.module.scss';
 export default function Advert() {
   const [form] = Form.useForm();
   const [base64String, setBase64String] = useState<any>(null);
+  const [fileList, setFileList] = useState([]);
 
-  const checkImage = (file: File) => {
+  const checkImage = async (file: File) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isJpgOrPng) {
       throw new Error('You can only upload JPG/PNG image files!');
@@ -29,11 +30,17 @@ export default function Advert() {
     return;
   };
 
-  const addAdvert = (value: any) => {
+  const handleFileChange = ({ fileList }: any) => {
+    setFileList(fileList);
+  };
+
+  const addAdvert = async (value: any) => {
     try {
-      checkImage(value.image.file);
-      if (base64String) addAdvertService(value.name, value.alt, base64String);
-      else console.log('error');
+      await checkImage(value.image.file);
+      if (base64String) {
+        await addAdvertService(value.name, value.alt, base64String);
+        console.log('done');
+      } else console.log('error');
     } catch (err) {
       console.log('err');
       console.log(err);
@@ -69,7 +76,13 @@ export default function Advert() {
           label="Image"
           rules={[{ required: true, message: 'Image needed' }]}
         >
-          <Upload listType="picture" maxCount={1} beforeUpload={() => false}>
+          <Upload
+            listType="picture"
+            fileList={fileList}
+            maxCount={1}
+            onChange={handleFileChange}
+            beforeUpload={() => false}
+          >
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
           </Upload>
         </Form.Item>

@@ -12,3 +12,10 @@ export async function addAdvertService(
   });
   return response;
 }
+
+export async function getAdvertService(page: number, limit: number) {
+  const response = await axiosApiInstance.get('/advert', {
+    params: { page: page, limit: limit },
+  });
+  return response;
+}

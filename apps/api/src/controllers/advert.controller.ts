@@ -34,7 +34,6 @@ export async function getAdvertHandle(
   next: NextFunction
 ) {
   try {
-    console.log('called');
     const pageNumber = parseInt(req.query.page as string) || 0;
     const limit = parseInt(req.query.limit as string) || 10;
 
@@ -74,10 +73,8 @@ export async function getAdvertHandle(
     }
     result.data = await Advert.find().skip(startIndex).limit(limit);
     result.rowsPerPage = limit;
-    console.log('called 1');
 
     return res.status(200).json({ data: result });
-    console.log('called 3');
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: 'Sorry, something went wrong' });
