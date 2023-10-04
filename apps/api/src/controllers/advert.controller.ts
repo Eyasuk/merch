@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { Types } from 'mongoose';
 import { validateInputs } from '../utils/validateForm';
 import Advert from '../models/Advert';
 import Collection from '../models/Collections';
@@ -78,5 +79,54 @@ export async function getAdvertHandle(
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: 'Sorry, something went wrong' });
+  }
+}
+
+export async function deleteAdvertHandle(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const result = validateInputs(req);
+  if (!result.success) {
+    return res.status(422).json({ errors: result.data });
+  }
+  try {
+    const deletedDocument = await Advert.findOneAndDelete({
+      _id: result.data.id,
+    });
+
+    if (!deletedDocument) {
+      return res.status(404).json({ error: 'advert not found' });
+    }
+
+    return res.status(200).json({ data: deletedDocument });
+  } catch (err) {
+    return res.status(500).json({ msg: 'Sorry, something went wrong' });
+  }
+}
+
+export async function editAdvertHandle(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const result = validateInputs(req);
+  if (!result.success) {
+    return res.status(422).json({ errors: result.data });
+  }
+
+  try {
+    const advertId = new Types.ObjectId(result.data.id);
+    const document = await Advert.findById(advertId);
+
+    if (!document) {
+      return res.status(404).json({ error: 'advert not found' });
+    }
+    document.status = !document.status;
+    const editedDocument = await document.save();
+    return res.status(200).json({ data: editedDocument });
+  } catch (err) {
+    return res.status(500).json({ msg: err });
   }
 }

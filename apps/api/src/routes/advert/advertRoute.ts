@@ -4,7 +4,10 @@ import {
   checkAdmin,
   checkAuthenticated,
 } from '../../middleware/auth.middleware';
-import { advertHandleValidator } from '../../middleware/validation/advertValidation';
+import {
+  advertHandleValidator,
+  editAdvertHandleValidator,
+} from '../../middleware/validation/advertValidation';
 import * as advert from '../../controllers/advert.controller';
 
 const router = Router();
@@ -19,14 +22,19 @@ router.post(
 
 router.get('/', checkAuthenticated, checkAdmin, advert.getAdvertHandle);
 
-// router.post(
-//   '/register',
-//   checkNotAuthenticated,
-//   registerHandleValidator,
-//   auth.adminRegisterHandle
-// );
-
-router.delete('/');
-router.put('/');
+router.delete(
+  '/',
+  checkAuthenticated,
+  checkAdmin,
+  editAdvertHandleValidator,
+  advert.deleteAdvertHandle
+);
+router.put(
+  '/',
+  checkAuthenticated,
+  checkAdmin,
+  editAdvertHandleValidator,
+  advert.editAdvertHandle
+);
 
 export default router;
