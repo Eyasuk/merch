@@ -34,7 +34,7 @@ export default function AdvertBox(): JSX.Element {
           setImageIndex((prevIndex) => (prevIndex + 1) % currentImage.length);
         }
         setZoomed(false);
-      }, 300); // Duration of the zoom animation in milliseconds
+      }, 3000); // Duration of the zoom animation in milliseconds
     }, 10000);
     return () => {
       clearInterval(timer);
