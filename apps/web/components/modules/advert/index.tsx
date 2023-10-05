@@ -43,16 +43,15 @@ export default function AdvertBox(): JSX.Element {
 
   return (
     <div className={styles.container}>
-      <div className={styles.imageWrapper}>
-        {currentImage.length > 0 && (
-          <Image
-            src={currentImage[imageIndex].image}
-            alt={currentImage[imageIndex].alt}
-            fill={true}
-            className={`${styles.image} ${zoomed ? styles.zoomed : ''}`}
-          />
-        )}
-      </div>
+      {currentImage.length > 0 && (
+        <Image
+          src={currentImage[imageIndex].image}
+          alt={currentImage[imageIndex].alt}
+          width={50}
+          height={31}
+          className={`${styles.image} ${zoomed ? styles.zoomed : ''}`}
+        />
+      )}
     </div>
   );
 }
