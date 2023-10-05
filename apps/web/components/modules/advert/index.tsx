@@ -61,7 +61,7 @@ export default function AdvertBox(): JSX.Element {
             onClick={() => {
               setImageIndex(_index);
             }}
-          ></div>
+          />
         ))}
       </div>
     </div>
