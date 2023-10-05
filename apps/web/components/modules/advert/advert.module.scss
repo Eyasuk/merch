@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  justify-content: center;
+  min-height: 35vh;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 2em;
+  background-color: red;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+
+  .imageWrapper {
+    width: 100%;
+    height: 100%;
+    //position: relative;
+    transition: transform 0.8s ease;
+
+    .image {
+      transition: transform 0.8s ease;
+      object-fit: cover;
+
+      &.zoomed {
+        transform: scale(1.3); /* Adjust the desired scale value */
+      }
+    }
+  }
+}

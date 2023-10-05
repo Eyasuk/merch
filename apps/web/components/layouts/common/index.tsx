@@ -2,8 +2,8 @@
 import { usePathname } from 'next/navigation';
 import { ConfigProvider, Layout } from 'antd';
 import { theme } from '@merch/shared';
-import FooterModule from 'components/features/footer';
-import HeaderModule from 'components/features/header';
+import FooterModule from 'components/modules/footer';
+import HeaderModule from 'components/modules/header';
 
 import styles from './common_layout.module.scss';
 

@@ -1,3 +1,5 @@
+import Home from 'components/features/home';
+
 export default async function Page() {
-  return <div></div>;
+  return <Home />;
 }
