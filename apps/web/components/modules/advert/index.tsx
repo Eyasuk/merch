@@ -52,6 +52,18 @@ export default function AdvertBox(): JSX.Element {
           className={`${styles.image} ${zoomed ? styles.zoomed : ''}`}
         />
       )}
+      <div className={styles.indicatorContainer}>
+        {currentImage.map((_items, _index) => (
+          <div
+            className={
+              _index == imageIndex ? styles.activeIndicator : styles.indicator
+            }
+            onClick={() => {
+              setImageIndex(_index);
+            }}
+          ></div>
+        ))}
+      </div>
     </div>
   );
 }
