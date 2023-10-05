@@ -1,7 +1,4 @@
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   .logo {
     display: flex;
     align-items: center;
@@ -11,43 +8,69 @@
       color: #22a39f;
     }
   }
-  .navbar {
-    .links {
-      position: relative;
-      margin-right: 2em;
-    }
-    .links:hover,
-    .links:active,
-    .active {
-      &::before {
-        content: ''; // Add an empty content pseudo-element
-        position: absolute;
-        top: -100%;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: #22a39f; // Adjust the border color as needed
-      }
-      .text {
-        font-size: 18px;
-      }
-    }
-    .navbar > * {
-      margin-right: 0.8em;
-    }
-  }
-  .rightBar {
+
+  .mainHeader {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding-inline: 50px;
+    .navbar {
+      .links {
+        position: relative;
+        margin-right: 2em;
+      }
+      .links:hover,
+      .links:active,
+      .active {
+        &::before {
+          content: ''; // Add an empty content pseudo-element
+          position: absolute;
+          top: -100%;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: #22a39f; // Adjust the border color as needed
+        }
+        .text {
+          font-size: 18px;
+        }
+      }
+      .navbar > * {
+        margin-right: 0.8em;
+      }
+    }
+    .rightBar {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  .mobileHeader {
+    display: none;
   }
 }
 
 @media (max-width: 720px) {
-  .header {
+  .mainHeader {
     .logo {
       .brandName {
         display: none;
       }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    margin-top: 1em;
+    padding: 0;
+    .mainHeader {
+      display: none;
+    }
+    .mobileHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-inline: 32px;
     }
   }
 }

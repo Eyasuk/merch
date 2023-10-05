@@ -23,6 +23,10 @@ const AdvertSchema = new Schema({
     required: true,
     default: false,
   },
+  color: {
+    type: String,
+    require: true,
+  },
 });
 
 const Advert = model('advert', AdvertSchema);

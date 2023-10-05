@@ -38,7 +38,12 @@ export default function Advert() {
     try {
       await checkImage(value.image.file);
       if (base64String) {
-        await addAdvertService(value.name, value.alt, base64String);
+        await addAdvertService(
+          value.name,
+          value.alt,
+          base64String,
+          value.color
+        );
         console.log('done');
       } else console.log('error');
     } catch (err) {
@@ -68,6 +73,13 @@ export default function Advert() {
           name="alt"
           label="Alt"
           rules={[{ required: true, message: 'Enter alt' }]}
+        >
+          <Input size="large" type="text" />
+        </Form.Item>
+        <Form.Item
+          name="color"
+          label="color"
+          rules={[{ required: true, message: 'Enter color' }]}
         >
           <Input size="large" type="text" />
         </Form.Item>

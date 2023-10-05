@@ -21,6 +21,7 @@ export async function addAdvertHandle(
       alt: advertData.alt,
       image: advertData.image,
       addedBy: req.user.id,
+      color: advertData.color,
     });
     await advert.save();
     return res.status(200).json(advert);

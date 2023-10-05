@@ -3,12 +3,14 @@ import { axiosApiInstance } from 'utils/services/axiosService';
 export async function addAdvertService(
   name: string,
   alt: string,
-  image: string
+  image: string,
+  color: string
 ) {
   const response = await axiosApiInstance.post('/advert', {
     name,
     alt,
     image,
+    color,
   });
   return response;
 }

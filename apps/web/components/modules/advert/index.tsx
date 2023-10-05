@@ -10,6 +10,7 @@ type ImageProps = {
   _id: string;
   alt: string;
   image: string;
+  color: string;
 };
 
 export default function AdvertBox(): JSX.Element {
@@ -45,6 +46,7 @@ export default function AdvertBox(): JSX.Element {
     <div className={styles.container}>
       {currentImage.length > 0 && (
         <Image
+          style={{ backgroundColor: currentImage[imageIndex].color }}
           src={currentImage[imageIndex].image}
           alt={currentImage[imageIndex].alt}
           width={50}
