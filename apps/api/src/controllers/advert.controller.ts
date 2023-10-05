@@ -130,3 +130,16 @@ export async function editAdvertHandle(
     return res.status(500).json({ msg: err });
   }
 }
+
+export async function getActiveAdvertHandle(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const activeAdvert = await Advert.find({ status: true });
+    res.status(200).json({ data: activeAdvert });
+  } catch (err) {
+    return res.status(500).json({ msg: err });
+  }
+}

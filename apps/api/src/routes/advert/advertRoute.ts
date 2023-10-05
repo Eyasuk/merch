@@ -29,6 +29,7 @@ router.delete(
   editAdvertHandleValidator,
   advert.deleteAdvertHandle
 );
+
 router.put(
   '/',
   checkAuthenticated,
@@ -36,5 +37,7 @@ router.put(
   editAdvertHandleValidator,
   advert.editAdvertHandle
 );
+
+router.get('/active', advert.getActiveAdvertHandle);
 
 export default router;
