@@ -1,0 +1,21 @@
+.container {
+  border-radius: 16px;
+  background-color: #f3efe0;
+  flex: 1 0 30%;
+  box-sizing: border-box;
+  min-height: 33em;
+}
+@media (max-width: 920px) {
+  .container {
+    flex-basis: 100%;
+    min-height: 70vh;
+    max-height: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .container {
+    min-height: 85vw;
+    max-height: none;
+  }
+}

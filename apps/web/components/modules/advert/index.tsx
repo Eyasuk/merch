@@ -45,27 +45,34 @@ export default function AdvertBox(): JSX.Element {
   return (
     <div className={styles.container}>
       {currentImage.length > 0 && (
-        <Image
-          style={{ backgroundColor: currentImage[imageIndex].color }}
-          src={currentImage[imageIndex].image}
-          alt={currentImage[imageIndex].alt}
-          width={50}
-          height={31}
-          className={`${styles.image} ${zoomed ? styles.zoomed : ''}`}
-        />
-      )}
-      <div className={styles.indicatorContainer}>
-        {currentImage.map((_items, _index) => (
-          <div
-            className={
-              _index == imageIndex ? styles.activeIndicator : styles.indicator
-            }
-            onClick={() => {
-              setImageIndex(_index);
-            }}
+        <>
+          <Image
+            key={imageIndex}
+            style={{ backgroundColor: currentImage[imageIndex].color }}
+            src={currentImage[imageIndex].image}
+            alt={currentImage[imageIndex].alt}
+            width={2}
+            height={1}
+            className={`${styles.image} ${zoomed ? styles.zoomed : ''}`}
           />
-        ))}
-      </div>
+
+          <div className={styles.indicatorContainer}>
+            {currentImage.map((_items, _index) => (
+              <div
+                key={_index}
+                className={
+                  _index == imageIndex
+                    ? styles.activeIndicator
+                    : styles.indicator
+                }
+                onClick={() => {
+                  setImageIndex(_index);
+                }}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

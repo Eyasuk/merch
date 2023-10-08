@@ -22,8 +22,8 @@ export function CommonLayout({ children }: Props): JSX.Element {
         {pathname !== '/signin' && pathname !== '/signup' ? (
           <>
             <Header className={styles.header} children={<HeaderModule />} />
-            <Content>{children}</Content>
-            <Footer>
+            <Content className={styles.contents}>{children}</Content>
+            <Footer className={styles.footer}>
               <FooterModule />
             </Footer>
           </>
