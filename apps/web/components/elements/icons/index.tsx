@@ -7,10 +7,15 @@ import {
   SkinOutlined,
   QuestionOutlined,
   BarsOutlined,
+  RightOutlined,
 } from '@ant-design/icons';
 
 export function BackIcon({ ...props }: any) {
   return <LeftOutlined {...props} />;
+}
+
+export function ForwardIcon({ ...props }: any) {
+  return <RightOutlined {...props} />;
 }
 
 export function CartIcon({ ...props }: any) {

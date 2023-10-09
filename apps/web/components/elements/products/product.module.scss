@@ -4,8 +4,13 @@
   width: 100%;
   align-items: center;
 
+  .title {
+    margin-top: 1.5em;
+  }
   .products {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     width: 100%;
     max-width: 90em;
@@ -15,22 +20,42 @@
     .moreProducts {
       display: none;
     }
+
     .hideProduct {
       display: show !important;
     }
+  }
+
+  .productIndex {
+    display: none;
+    margin-top: 1em;
+  }
+
+  .showMore {
+    margin-top: 1em;
   }
 }
 
 @media (max-width: 1000px) {
   .container {
-    padding-inline: 3%;
+    padding-inline: 1%;
     max-width: none;
     .products {
-      padding-inline: 2em;
+      padding-inline: 1em;
+      gap: 0.1em;
 
       .hideProduct {
         display: none;
       }
+      .showProduct {
+        display: block;
+      }
+    }
+    .productIndex {
+      display: block;
+    }
+    .showMore {
+      margin-top: 0.5em;
     }
   }
 }

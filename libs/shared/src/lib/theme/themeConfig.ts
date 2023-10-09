@@ -5,7 +5,7 @@ export const theme: ThemeConfig = {
   token: {
     fontSize: 16,
     colorPrimary: '#22A39F',
-    fontFamily: 'Helvetica Neue',
+    fontFamily: 'Roboto',
   },
   algorithm: antdTheme.darkAlgorithm,
   // algorithm: antdTheme.defaultAlgorithm,
