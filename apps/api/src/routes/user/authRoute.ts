@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { checkNotAuthenticated } from '../../middleware/auth.middleware';
 
 import {
   registerHandleValidator,

@@ -44,7 +44,7 @@ export async function adminLoginHandle(
     if (err) {
       return res.status(500).json({ error: err.message });
     }
-    if (user.role != 'admin') {
+    if (!user.role.includes('admin')) {
       return res.status(401).json({ message: 'not an admin' });
     }
     if (!user) {
@@ -110,7 +110,7 @@ export function checkAdminAuthHandle(
   res: Response,
   next: NextFunction
 ) {
-  if (req.isAuthenticated() && req.user.role == 'admin') {
+  if (req.isAuthenticated() && req.user.role.includes('admin')) {
     return res.status(200).json({ isLoggedIn: true });
   } else {
     return res.status(200).json({ isLoggedIn: false });

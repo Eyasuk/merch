@@ -14,6 +14,7 @@ import * as dotenv from 'dotenv';
 import userAuthRouter from './routes/user/authRoute';
 import adminAuthRouter from './routes/admin/authRoute';
 import advertRouter from './routes/advert/advertRoute';
+import productRouter from './routes/product/productRoute';
 
 import { initializePassport } from './utils/passport-config';
 import { startChangeStream } from './utils/changeStreams';
@@ -109,6 +110,7 @@ app.use((req, res, next) => {
 app.use('/', userAuthRouter);
 app.use('/admin', adminAuthRouter);
 app.use('/advert', advertRouter);
+app.use('/product', productRouter);
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {

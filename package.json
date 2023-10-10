@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "main_dev": "nx run web:serve:development --port=4200",
+    "main_dev": "nx run web:serve:development",
     "api_dev": "nx run api:serve:development",
-    "admin_dev": "nx run admin:serve:development --port=4201",
-    "creator_dev": "nx run creator:serve:development --port=4202"
+    "admin_dev": "nx run admin:serve:development",
+    "creator_dev": "nx run creator:serve:development",
+    "dev": "nx run-many --target serve --parallel=4"
   },
   "private": true,
   "devDependencies": {
@@ -29,6 +30,7 @@
     "@types/express": "4.17.13",
     "@types/express-session": "^1.17.7",
     "@types/jest": "^29.4.0",
+    "@types/multer": "^1.4.8",
     "@types/node": "18.14.2",
     "@types/passport-local": "^1.0.35",
     "@types/react": "18.2.14",
@@ -71,6 +73,7 @@
     "jsonwebtoken": "^9.0.2",
     "libphonenumber-js": "^1.10.44",
     "mongoose": "^7.5.0",
+    "multer": "1.4.5-lts.1",
     "next": "13.4.1",
     "passport": "^0.6.0",
     "passport-google-oauth": "^2.0.0",

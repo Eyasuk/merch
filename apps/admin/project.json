@@ -23,8 +23,10 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "admin:build",
-        "dev": true
-      },
+        "dev": true,
+        "port":4201
+        
+           },
       "configurations": {
         "development": {
           "buildTarget": "admin:build:development",

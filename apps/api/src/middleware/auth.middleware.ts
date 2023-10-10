@@ -24,7 +24,15 @@ export function checkNotAuthenticated(
 }
 
 export function checkAdmin(req: Request, res: Response, next: NextFunction) {
-  if (req.user && req.user.role == 'admin') {
+  if (req.user && req.user.role.includes('admin')) {
+    next();
+  } else {
+    return res.status(401).json({ message: 'not authorized' });
+  }
+}
+
+export function checkCreator(req: Request, res: Response, next: NextFunction) {
+  if (req.user && req.user.role.includes('creator')) {
     next();
   } else {
     return res.status(401).json({ message: 'not authorized' });

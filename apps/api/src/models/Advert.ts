@@ -29,5 +29,5 @@ const AdvertSchema = new Schema({
   },
 });
 
-const Advert = model('advert', AdvertSchema);
+const Advert = model('adverts', AdvertSchema);
 export default Advert;

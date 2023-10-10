@@ -12,5 +12,5 @@ const CollectionSchema = new Schema({
   },
 });
 
-const Collection = model('collection', CollectionSchema);
+const Collection = model('collections', CollectionSchema);
 export default Collection;

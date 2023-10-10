@@ -23,7 +23,9 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "creator:build",
-        "dev": true
+        "dev": true,
+        "port":4202
+
       },
       "configurations": {
         "development": {

@@ -4,7 +4,7 @@ export interface UserDocument extends Document {
   email?: string;
   phone?: string;
   firstName: string;
-  role?: 'user' | 'admin' | 'creator' | 'moderator';
+  role?: string[];
 }
 
 const UserSchema = new Schema({
@@ -22,12 +22,12 @@ const UserSchema = new Schema({
     required: true,
   },
   role: {
-    type: String,
+    type: [{ type: String, enum: ['user', 'admin', 'creator', 'moderator'] }],
     required: true,
     enum: ['user', 'admin', 'creator', 'moderator'],
-    default: 'user',
+    default: ['user'],
   },
 });
 
-const User = model('user', UserSchema);
+const User = model('users', UserSchema);
 export default User;
