@@ -3,8 +3,12 @@ import {
   checkAuthenticated,
   checkCreator,
 } from '../../middleware/auth.middleware';
-import { productHandleValidator } from '../../middleware/validation/productValidation';
+import {
+  productHandleValidator,
+  productImageHandleValidator,
+} from '../../middleware/validation/productValidation';
 import * as product from '../../controllers/product.controller';
+import upload from '../../middleware/fileUpload.middleware';
 
 const router = Router();
 
@@ -15,5 +19,16 @@ router.post(
   productHandleValidator,
   product.addProductHandle
 );
+
+router.put(
+  '/images',
+  checkAuthenticated,
+  checkCreator,
+  upload.any(),
+  productImageHandleValidator,
+  product.addImage
+);
+
+//upload.array('image', 5),
 
 export default router;
