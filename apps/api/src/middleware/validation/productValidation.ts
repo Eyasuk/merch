@@ -74,9 +74,9 @@ export const productImageHandleValidator = [
           'Invalid file type. Only JPEG and PNG images are allowed.'
         );
       }
-      const maxSize = 3 * 1024 * 1024; // 3MB in bytes
+      const maxSize = 1 * 1024 * 1024; // 3MB in bytes
       if (req.files[i].size > maxSize) {
-        throw new Error('File size exceeds the maximum limit of 3MB.');
+        throw new Error('File size exceeds the maximum limit of 1MB.');
       }
     }
     return true;
