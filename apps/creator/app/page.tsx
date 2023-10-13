@@ -1,5 +1,5 @@
-import styles from './page.module.scss';
+import Home from 'components/feature/home';
 
 export default async function Index() {
-  return <div className={styles.page}></div>;
+  return <Home />;
 }

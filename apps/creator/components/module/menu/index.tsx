@@ -31,36 +31,12 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Dashboard', '/', <MailOutlined />),
-  getItem('Admins', '/admin', <MailOutlined />, [
-    getItem(<Link href="/admin">Add</Link>, '1'),
-    getItem('Remove', '2'),
-    getItem('List', '3'),
-  ]),
-  getItem('Products', '/products', <AppstoreOutlined />, [
-    getItem('Add', '5'),
-    getItem('Remove', '6'),
-  ]),
-  getItem(<Link href="/advert"> Advert</Link>, '/advert', <SettingOutlined />),
-  getItem('Orders', '/order', <SettingOutlined />, [
-    getItem('Option 12', '12'),
-  ]),
-  getItem('Shops', '/shops', <SettingOutlined />, [
-    getItem('Option 9', '16'),
-    getItem('Option 10', '17'),
-    getItem('Option 11', '18'),
-    getItem('Option 12', '19'),
-  ]),
+  getItem('Dashboard', '/', <AppstoreOutlined />),
+  getItem('Products', '/products', <AppstoreOutlined />),
+  getItem('Analytics', '/analytics', <AppstoreOutlined />),
 ];
 
-const rootSubmenuKeys = [
-  '/',
-  '/admin',
-  '/products',
-  '/advert',
-  '/order',
-  '/shops',
-];
+const rootSubmenuKeys = ['/', '/products', '/analytics'];
 
 export default function MenuBar(): JSX.Element {
   const currentPath = usePathname();

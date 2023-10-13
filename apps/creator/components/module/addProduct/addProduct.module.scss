@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 12em;
+  .button {
+    margin-top: 1em;
+    width: 20ch;
+  }
+}
+
+.modal {
+  width: 95% !important;
+  max-width: 60em !important;
+  top: 3em !important;
+  .modalContent {
+    height: 80vh;
+    .modalTitle {
+      margin-top: 0px;
+      margin-bottom: 0.3em;
+    }
+    .divider {
+      position: relative;
+      left: -2.6%;
+      width: 105.2%;
+    }
+  }
+}
