@@ -15,7 +15,7 @@
   max-width: 60em !important;
   top: 3em !important;
   .modalContent {
-    height: 80vh;
+    min-height: 80vh;
     .modalTitle {
       margin-top: 0px;
       margin-bottom: 0.3em;
@@ -24,6 +24,20 @@
       position: relative;
       left: -2.6%;
       width: 105.2%;
+    }
+    .form {
+      width: 95%;
+      margin-top: 1.5em;
+      .colorForm {
+        display: flex;
+        gap: 1em;
+        align-items: center;
+        .colorButton {
+          height: 40.5px;
+          width: 42.5px;
+          padding: 0%;
+        }
+      }
     }
   }
 }
