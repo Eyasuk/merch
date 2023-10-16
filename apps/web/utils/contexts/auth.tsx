@@ -1,6 +1,6 @@
 'use client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { Routes } from 'utils/constants/routes';
 import { userSessionService } from 'utils/services/authService';
 
@@ -25,6 +25,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const currentPath = usePathname();
 
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
+  const [path, setPath] = useState<string>();
 
   const redirectTo = async (path: string): Promise<void> => {
     const userSession = await userSessionService();
@@ -36,9 +37,6 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   };
 
   useEffect(() => {
-    console.log('this cold');
-    console.log(userLoggedIn);
-
     redirectTo(currentPath ?? '/');
   }, []);
 

@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { Button, Card, Divider, Modal, Steps } from 'antd';
 import { Text, Title } from '@merch/shared';
-import ProductDetail from './productDetail';
-import ProductImage from './productImage';
-import ProductVariation from './productVariation';
+import ProductDetail from 'components/module/addProduct/productDetail';
+import ProductImage from 'components/module/addProduct/productImage';
+import ProductVariation from 'components/module/addProduct/productVariation';
 
 import styles from './addProduct.module.scss';
 
@@ -21,7 +21,7 @@ export default function AddProduct(): JSX.Element {
   };
 
   const steps = [
-    <ProductDetail onNext={onNext} />,
+    <ProductDetail next={onNext} />,
     <ProductImage onNext={onNext} onPrevious={onPrevious} />,
     <ProductVariation onNext={onNext} onPrevious={onPrevious} />,
     <div>f</div>,

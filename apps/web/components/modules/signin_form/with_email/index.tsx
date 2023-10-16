@@ -14,7 +14,7 @@ export default function SignInForm() {
       const res = await signInService(value.email, value.password);
       if (res.status == 200) {
         setUserLoggedIn(true);
-        router.push('/');
+        router.back();
       }
     } catch (err) {
       console.log('err');

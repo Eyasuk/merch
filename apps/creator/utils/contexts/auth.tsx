@@ -1,7 +1,7 @@
 'use client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { Routes } from 'utils/constants/routes';
+import { useRouter, usePathname } from 'next/navigation';
+
 import { userSessionService } from 'utils/services/authService';
 
 interface AuthState {
@@ -30,13 +30,12 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     const userSession = await userSessionService();
     setUserLoggedIn(userSession);
 
-    if (!userSession && Object.values(Routes.authorizedRoutes).includes(path)) {
-      router.push('/signin');
+    if (!userSession) {
+      router.push('http://127.0.0.1:4200/signin');
     }
   };
 
   useEffect(() => {
-    console.log('this cold');
     console.log(userLoggedIn);
 
     redirectTo(currentPath ?? '/');

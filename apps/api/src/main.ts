@@ -60,6 +60,8 @@ app.use(
       'http://127.0.0.1:4200',
       'http://127.0.0.1:4201',
       'http://localhost:4201',
+      'http://127.0.0.1:4202',
+      'http://localhost:4202',
     ], // Replace with the actual origin of your frontend application
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     credentials: true,

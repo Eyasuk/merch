@@ -38,6 +38,7 @@ const ProductVariantsSchema = new Schema({
               },
             },
             stock: Number,
+            description: String,
           },
         ],
       },

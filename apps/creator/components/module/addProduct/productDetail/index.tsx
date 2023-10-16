@@ -2,16 +2,17 @@
 import { useState } from 'react';
 import { Badge, Button, ColorPicker, Form, Input, InputNumber } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { addProductService } from 'utils/services/productService';
 
 import styles from './productDetail.module.scss';
 
 const { TextArea } = Input;
 
 type Props = {
-  onNext: Function;
+  next: Function;
 };
 
-export default function ProductDetail({ onNext }: Props): JSX.Element {
+export default function ProductDetail({ next }: Props): JSX.Element {
   const [form] = Form.useForm();
   const [colors, setColors] = useState<string[]>([]);
 
@@ -26,9 +27,22 @@ export default function ProductDetail({ onNext }: Props): JSX.Element {
     });
   };
 
-  const submit = () => {
-    onNext();
-    return true;
+  const submit = async (value: any) => {
+    try {
+      const response = await addProductService(
+        value.name,
+        value.description,
+        value.price,
+        value.stock,
+        value.category,
+        value.colors
+      );
+
+      next();
+      return true;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
