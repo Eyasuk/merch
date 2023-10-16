@@ -29,6 +29,13 @@ router.put(
   product.addImage
 );
 
+router.get(
+  '/unsaved',
+  checkAuthenticated,
+  checkCreator,
+  product.getUnsavedProductHandle
+);
+
 //upload.array('image', 5),
 
 export default router;

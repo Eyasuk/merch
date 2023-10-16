@@ -81,3 +81,15 @@ export async function addImage(
     return res.status(500).json({ error: err.message });
   }
 }
+
+export async function getUnsavedProductHandle(req: Request, res: Response) {
+  try {
+    const response = await Product.findOne({
+      owner: req.user.id,
+      completed: false,
+    });
+    res.status(200).json(response);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}

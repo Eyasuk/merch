@@ -63,6 +63,11 @@ const ProductsSchema = new Schema({
     type: Boolean,
     default: false,
   },
+
+  completed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Products = model('products', ProductsSchema);
