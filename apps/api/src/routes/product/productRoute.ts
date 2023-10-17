@@ -4,6 +4,7 @@ import {
   checkCreator,
 } from '../../middleware/auth.middleware';
 import {
+  editProductHandleValidator,
   productHandleValidator,
   productImageHandleValidator,
 } from '../../middleware/validation/productValidation';
@@ -34,6 +35,14 @@ router.get(
   checkAuthenticated,
   checkCreator,
   product.getUnsavedProductHandle
+);
+
+router.put(
+  '/',
+  checkAuthenticated,
+  checkCreator,
+  editProductHandleValidator,
+  product.editProductHandle
 );
 
 //upload.array('image', 5),

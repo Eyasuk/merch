@@ -93,3 +93,30 @@ export async function getUnsavedProductHandle(req: Request, res: Response) {
     return res.status(500).json({ error: err.message });
   }
 }
+
+export async function editProductHandle(req: Request, res: Response) {
+  const result = validateInputs(req);
+  if (!result.success) {
+    return res.status(422).json({ errors: result.data });
+  }
+  try {
+    const product = await Product.findOne({
+      owner: req.user.id,
+      completed: false,
+    });
+
+    const updatePromises = Object.keys(result.data).map(async (field) => {
+      if (product.get(field) !== undefined) {
+        product[field] = result.data[field];
+      }
+    });
+
+    await Promise.all(updatePromises);
+
+    const newProduct = await product.save();
+
+    res.status(200).json(newProduct);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}

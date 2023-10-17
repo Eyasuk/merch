@@ -11,6 +11,7 @@ import styles from './addProduct.module.scss';
 export default function AddProduct(): JSX.Element {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [productDetail, setProductDetail] = useState();
 
   const onNext = () => {
     setCurrentStep((prev) => prev + 1);
@@ -21,9 +22,23 @@ export default function AddProduct(): JSX.Element {
   };
 
   const steps = [
-    <ProductDetail next={onNext} />,
-    <ProductImage onNext={onNext} onPrevious={onPrevious} />,
-    <ProductVariation onNext={onNext} onPrevious={onPrevious} />,
+    <ProductDetail
+      next={onNext}
+      productDetail={productDetail}
+      setProductDetail={setProductDetail}
+    />,
+    <ProductImage
+      onNext={onNext}
+      onPrevious={onPrevious}
+      productDetail={productDetail}
+      setProductDetail={setProductDetail}
+    />,
+    <ProductVariation
+      onNext={onNext}
+      onPrevious={onPrevious}
+      productDetail={productDetail}
+      setProductDetail={setProductDetail}
+    />,
     <div>f</div>,
   ];
 
@@ -63,6 +78,7 @@ export default function AddProduct(): JSX.Element {
           <Steps
             current={currentStep}
             labelPlacement="vertical"
+            responsive={true}
             items={[
               {
                 title: 'Details',

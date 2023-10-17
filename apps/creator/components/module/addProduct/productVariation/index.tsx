@@ -10,11 +10,14 @@ const { TextArea } = Input;
 type Props = {
   onNext: Function;
   onPrevious: Function;
+  productDetail?: {};
+  setProductDetail?: Function;
 };
 
 export default function ProductDetail({
   onNext,
   onPrevious,
+  productDetail,
 }: Props): JSX.Element {
   const [form] = Form.useForm();
   const [colors, setColors] = useState<string[]>([]);

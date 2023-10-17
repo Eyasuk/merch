@@ -1,8 +1,13 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Badge, Button, ColorPicker, Form, Input, InputNumber } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { addProductService } from 'utils/services/productService';
+import { Text } from '@merch/shared';
+import {
+  addProductService,
+  editProductService,
+  getUnsavedProductService,
+} from 'utils/services/productService';
 
 import styles from './productDetail.module.scss';
 
@@ -10,14 +15,20 @@ const { TextArea } = Input;
 
 type Props = {
   next: Function;
+  productDetail?: any;
+  setProductDetail: Function;
 };
 
-export default function ProductDetail({ next }: Props): JSX.Element {
+export default function ProductDetail({
+  next,
+  productDetail,
+  setProductDetail,
+}: Props): JSX.Element {
   const [form] = Form.useForm();
   const [colors, setColors] = useState<string[]>([]);
 
-  const addColor = () => {
-    setColors((prev) => [...prev, '#22A39F']);
+  const addColor = (color: any) => {
+    setColors((prev) => [...prev, '#00000000']);
   };
 
   const removeColor = (index: number) => {
@@ -25,6 +36,12 @@ export default function ProductDetail({ next }: Props): JSX.Element {
       const updatedColors = [...prev.slice(0, index), ...prev.slice(index + 1)];
       return updatedColors;
     });
+  };
+
+  const changeColor = (color: any, index: number) => {
+    const updatedColors = [...colors];
+    updatedColors[index] = color.toHexString();
+    setColors(updatedColors);
   };
 
   const submit = async (value: any) => {
@@ -35,15 +52,76 @@ export default function ProductDetail({ next }: Props): JSX.Element {
         value.price,
         value.stock,
         value.category,
-        value.colors
+        colors
       );
+      setProductDetail((prev: any) => ({ ...prev, ...response.data }));
 
       next();
-      return true;
     } catch (err) {
       console.log(err);
     }
   };
+
+  const edit = async (value: any) => {
+    try {
+      const response = await editProductService({
+        ...form.getFieldsValue(),
+        colors,
+      });
+      setProductDetail((prev: any) => ({ ...prev, ...response.data }));
+
+      next();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const checkUnsavedProduct = async () => {
+    try {
+      const unsavedProduct = await getUnsavedProductService();
+
+      if (unsavedProduct) {
+        setProductDetail((prev: any) => ({ ...prev, ...unsavedProduct.data }));
+        const {
+          name,
+          description,
+          price,
+          stock,
+          category,
+          colors: colorData,
+        } = unsavedProduct.data;
+        form.setFieldsValue({ name, description, price, stock, category });
+        setColors(colorData);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (!productDetail) {
+      checkUnsavedProduct();
+    } else {
+      const {
+        name,
+        description,
+        price,
+        stock,
+        category,
+        colors: colorData,
+      } = productDetail;
+      form.setFieldsValue({
+        name,
+        description,
+        price,
+        stock,
+        category,
+      });
+      if (colorData.length > 0) {
+        setColors(colorData);
+      }
+    }
+  }, []);
 
   return (
     <div className={styles.modalContent}>
@@ -53,7 +131,7 @@ export default function ProductDetail({ next }: Props): JSX.Element {
         name="addProduct"
         layout="vertical"
         autoComplete="false"
-        onFinish={submit}
+        onFinish={productDetail ? edit : submit}
       >
         <Form.Item
           name="name"
@@ -112,7 +190,14 @@ export default function ProductDetail({ next }: Props): JSX.Element {
                     />
                   }
                 >
-                  <ColorPicker size="large" defaultValue={'#FFFFFF00'} />
+                  <ColorPicker
+                    allowClear={true}
+                    size="large"
+                    format="hex"
+                    defaultValue={'#FFFFFF00'}
+                    onChangeComplete={(color) => changeColor(color, index)}
+                    value={colors[index]}
+                  />
                 </Badge>
               );
             })}
@@ -126,6 +211,13 @@ export default function ProductDetail({ next }: Props): JSX.Element {
           <Button type="primary" size="large" htmlType="submit">
             Next
           </Button>
+          {productDetail && (
+            <Text type="secondary">
+              {'  '}
+              There is a product you have be editing but not saved it to delete
+              it and start over.
+            </Text>
+          )}
         </Form.Item>
       </Form>
     </div>

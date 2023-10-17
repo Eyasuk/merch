@@ -18,3 +18,21 @@ export async function addProductService(
   });
   return response;
 }
+
+export async function getUnsavedProductService() {
+  const response = await axiosApiInstance.get('/product/unsaved', {});
+  return response;
+}
+
+export async function editProductService(detail: object) {
+  const response = await axiosApiInstance.put('/product', { ...detail });
+  return response;
+}
+
+export async function addProductImageService(productId: string, image: any) {
+  const response = await axiosApiInstance.putForm('/product/images', {
+    productId,
+    image,
+  });
+  return response;
+}

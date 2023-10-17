@@ -4,18 +4,22 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Text } from '@merch/shared';
 
 import styles from './productImage.module.scss';
+import { addProductImageService } from 'utils/services/productService';
 
 type Props = {
   onNext: Function;
   onPrevious: Function;
+  productDetail?: any;
+  setProductDetail?: Function;
 };
 
 export default function ProductImage({
   onNext,
   onPrevious,
+  productDetail,
 }: Props): JSX.Element {
   const [form] = Form.useForm();
-  const [fileList, setFileList] = useState([]);
+  const [fileList, setFileList] = useState<any>([]);
 
   const checkImage = async (file: File) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -26,20 +30,40 @@ export default function ProductImage({
     if (!isLt2M) {
       throw new Error('Image must be smaller than 2MB!');
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64 = reader.result;
-    };
-    reader.readAsDataURL(file);
+    // const reader = new FileReader();
+    // reader.onload = () => {
+    //   const base64 = reader.result;
+    // };
+    // reader.readAsDataURL(file);
     return;
   };
 
-  const handleFileChange = ({ fileList }: any) => {
-    setFileList(fileList);
+  const handleFileChange = async (fileList: any) => {
+    try {
+      console.log(fileList);
+      for (var i = 0; i < fileList.fileList.length; i++) {
+        await checkImage(fileList.fileList[i]);
+      }
+      setFileList(fileList);
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
   };
 
-  const submit = () => {
-    onNext();
+  const submit = async (value: any) => {
+    try {
+      if (productDetail?._id) {
+        const response = await addProductImageService(
+          productDetail._id,
+          fileList.fileList
+        );
+        console.log(response);
+        onNext();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -52,7 +76,11 @@ export default function ProductImage({
         form={form}
         onFinish={submit}
       >
-        <Form.Item name="images" label="Images">
+        <Form.Item
+          name="images"
+          label="Images"
+          rules={[{ required: true, message: 'Image is not uploaded' }]}
+        >
           <div className={styles.image}>
             <Text type="secondary">Upload at least 3 image,</Text>
 
@@ -63,7 +91,7 @@ export default function ProductImage({
             <Upload
               className={styles.upload}
               listType="picture-card"
-              fileList={fileList}
+              fileList={fileList.fileList}
               maxCount={6}
               onChange={handleFileChange}
               beforeUpload={() => false}
