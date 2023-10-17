@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { cwd } from 'process';
-import path from 'path';
 import fs from 'fs';
 import Product from '../models/Products';
+import ProductVariation from '../models/ProductVariant';
 import { validateInputs } from '../utils/validateForm';
 
 export async function addProductHandle(
@@ -105,6 +104,10 @@ export async function editProductHandle(req: Request, res: Response) {
       completed: false,
     });
 
+    if (req.user.id != product.owner) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
     const updatePromises = Object.keys(result.data).map(async (field) => {
       if (product.get(field) !== undefined) {
         product[field] = result.data[field];
@@ -116,6 +119,41 @@ export async function editProductHandle(req: Request, res: Response) {
     const newProduct = await product.save();
 
     res.status(200).json(newProduct);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
+
+export async function editProductVariationHandle(req: Request, res: Response) {
+  const result = validateInputs(req);
+  if (!result.success) {
+    return res.status(422).json({ errors: result.data });
+  }
+  try {
+    const product = await Product.findById(result.data.productId);
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    if (req.user.id != product.owner) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+    const productVariation = await ProductVariation.findOne({
+      product: result.data.productId,
+    });
+    if (productVariation) {
+      productVariation.color = result.data.color;
+      await productVariation.save();
+      return res.status(200).json(productVariation);
+    } else {
+      const newProductVariation = new ProductVariation({
+        product: result.data.productId,
+        color: result.data.color,
+      });
+      await newProductVariation.save();
+      return res.status(200).json(newProductVariation);
+    }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

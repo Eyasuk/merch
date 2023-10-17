@@ -2,8 +2,18 @@
   .form {
     width: 95%;
     margin-top: 1.5em;
+
+    .colorButtons {
+      height: 40.5px;
+      width: 42.5px;
+      padding: 0px;
+      // margin-right: 1em;
+      .color {
+        border-radius: inherit;
+      }
+    }
     .buttons {
-      margin-right: 1.5em;
+      margin-right: 1em;
       min-width: 12ch;
     }
   }

@@ -133,3 +133,27 @@ export const editProductHandleValidator = [
     })
     .optional(),
 ];
+const isBuffer = (value: any) => {
+  return Buffer.isBuffer(value);
+};
+
+export const editProductVariationHandleValidator = [
+  body('productId')
+    .not()
+    .isEmpty()
+    .withMessage('ProductId should not be empty')
+    .isString()
+    .custom((value, { req }) => {
+      const validId = isValidObjectId(value);
+      if (!validId) {
+        throw new Error('Invalid Id');
+      }
+      return true;
+    }),
+  body('color')
+    .isArray({ min: 1 })
+    .withMessage('Colors must be an array with at least one element'),
+  body('color.*.image').custom(isBuffer).withMessage('Invalid image data'),
+  body('color.*.stock').isInt({ min: 0 }).withMessage('Invalid stock value'),
+  body('color.*.price').isFloat({ min: 0 }).withMessage('Invalid price value'),
+];

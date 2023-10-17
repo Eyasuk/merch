@@ -5,6 +5,7 @@ const ProductVariantsSchema = new Schema({
   product: {
     type: Schema.Types.ObjectId,
     ref: 'products',
+    unique: true,
   },
   color: {
     type: [
