@@ -5,6 +5,7 @@ import { Text } from '@merch/shared';
 
 import styles from './productVariation.module.scss';
 import { UploadOutlined } from '@ant-design/icons';
+import { addProductVariationService } from 'utils/services/productService';
 
 const { TextArea } = Input;
 
@@ -12,16 +13,17 @@ type Props = {
   onNext: Function;
   onPrevious: Function;
   productDetail?: any;
-  setProductDetail?: Function;
+  setProductDetail?: any;
 };
 
 export default function ProductVariation({
   onNext,
   onPrevious,
   productDetail,
+  setProductDetail,
 }: Props): JSX.Element {
   const [form] = Form.useForm();
-  const [colorImages, setColorImages] = useState<any[]>([]);
+  const [colorImages, setColorImages] = useState<File[]>([]);
 
   const checkImage = async (file: File) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -39,19 +41,54 @@ export default function ProductVariation({
   const handleFileChange = async (fileList: any, index: number) => {
     try {
       await checkImage(fileList.file);
-      const updatedImage = colorImages;
-      updatedImage[index] = fileList.file;
-      setColorImages(updatedImage);
+      if (fileList.fileList.length == 0) {
+        setColorImages((prevColorImages) => {
+          const updatedImages = prevColorImages.filter(
+            (_, inx) => inx !== index
+          );
+          return updatedImages;
+        });
+      } else {
+        setColorImages((prevColorImages) => {
+          const updatedImage = [...prevColorImages];
+          updatedImage[index] = fileList.file;
+          return updatedImage;
+        });
+      }
     } catch (err) {
       console.log(err);
       return err;
     }
   };
 
-  const submit = (value: any) => {
-    console.log(value);
-    console.log(colorImages);
-    // onNext();
+  const submit = async (value: any) => {
+    try {
+      if (productDetail.colors.length > 0) {
+        const variation = productDetail.colors.map(
+          (color: string, index: number) => {
+            return {
+              stock: value[`stock${index}`],
+              price: value[`price${index}`],
+              color: color,
+              [color]: colorImages[index],
+            };
+          }
+        );
+        const response = await addProductVariationService(
+          productDetail._id,
+          variation
+        );
+
+        setProductDetail((prev: any) => ({
+          ...prev,
+          variation: { ...response.data },
+        }));
+
+        onNext();
+      }
+    } catch (err) {
+      console.log(err);
+    }
     return true;
   };
 
@@ -68,56 +105,53 @@ export default function ProductVariation({
         <Tabs
           defaultActiveKey="1"
           title="Color Variation"
-          items={productDetail.colors.map((color: string, index: number) => {
-            return {
-              label: (
-                <Button key={index} className={styles.colorButtons}>
-                  <div
-                    className={styles.color}
-                    style={{
-                      backgroundColor: color,
-                      height: '40.5px',
-                      width: '42.5px',
-                    }}
-                  />
-                </Button>
-              ),
-              key: index,
-              children: (
-                <div>
-                  <Form.Item label="Image for variation" name="image">
-                    <Text type="secondary">
-                      you can leave this field empty{' '}
-                    </Text>
-                    <Upload
-                      className={styles.upload}
-                      listType="picture-card"
-                      // fileList={fileList.fileList}
-                      maxCount={1}
-                      onChange={(file) => handleFileChange(file, index)}
-                      beforeUpload={() => false}
+          items={
+            productDetail.colors.length > 0 &&
+            productDetail.colors.map((color: string, index: number) => {
+              return {
+                label: (
+                  <Button key={index} className={styles.colorButtons}>
+                    <div
+                      className={styles.color}
+                      style={{
+                        backgroundColor: color,
+                        height: '40.5px',
+                        width: '42.5px',
+                      }}
+                    />
+                  </Button>
+                ),
+                key: index,
+                children: (
+                  <div>
+                    <Form.Item
+                      label="Image for variation"
+                      name={`image${index}`}
                     >
-                      <UploadOutlined />
-                    </Upload>
-                  </Form.Item>
-                  <Form.Item
-                    name={`stock${index}`}
-                    label="Stock"
-                    rules={[{ required: true, message: 'Enter a stock' }]}
-                  >
-                    <InputNumber min={5} addonAfter="Pics" />
-                  </Form.Item>
-                  <Form.Item
-                    name={`price${index}`}
-                    label="Price"
-                    rules={[{ required: true, message: 'Enter a price' }]}
-                  >
-                    <InputNumber min={10} addonAfter="Birr" />
-                  </Form.Item>
-                </div>
-              ),
-            };
-          })}
+                      <Text type="secondary">
+                        you can leave this field empty{' '}
+                      </Text>
+                      <Upload
+                        className={styles.upload}
+                        listType="picture-card"
+                        maxCount={1}
+                        onChange={(file) => handleFileChange(file, index)}
+                        beforeUpload={() => false}
+                      >
+                        <UploadOutlined />
+                      </Upload>
+                    </Form.Item>
+                    <Form.Item name={`stock${index}`} label="Stock">
+                      <InputNumber min={5} addonAfter="Pics" />
+                    </Form.Item>
+                    <Form.Item name={`price${index}`} label="Price">
+                      <InputNumber min={10} addonAfter="Birr" />
+                    </Form.Item>
+                  </div>
+                ),
+              };
+            })
+          }
         />
 
         <Form.Item>

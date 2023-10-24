@@ -10,13 +10,14 @@ type Props = {
   onNext: Function;
   onPrevious: Function;
   productDetail?: any;
-  setProductDetail?: Function;
+  setProductDetail?: any;
 };
 
 export default function ProductImage({
   onNext,
   onPrevious,
   productDetail,
+  setProductDetail,
 }: Props): JSX.Element {
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<any>([]);
@@ -40,13 +41,11 @@ export default function ProductImage({
 
   const handleFileChange = async (fileList: any) => {
     try {
-      console.log(fileList);
       for (var i = 0; i < fileList.fileList.length; i++) {
         await checkImage(fileList.fileList[i]);
       }
       setFileList(fileList);
     } catch (err) {
-      console.log(err);
       return err;
     }
   };
@@ -58,7 +57,11 @@ export default function ProductImage({
           productDetail._id,
           fileList.fileList
         );
-        console.log(response);
+        setProductDetail((prev: any) => ({
+          ...prev,
+          image: { ...response.data },
+        }));
+
         onNext();
       }
     } catch (err) {

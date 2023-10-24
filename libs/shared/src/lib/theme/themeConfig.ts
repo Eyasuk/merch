@@ -7,6 +7,6 @@ export const theme: ThemeConfig = {
     colorPrimary: '#22A39F',
     fontFamily: 'Roboto',
   },
-  algorithm: antdTheme.darkAlgorithm,
-  // algorithm: antdTheme.defaultAlgorithm,
+  // algorithm: antdTheme.darkAlgorithm,
+  algorithm: antdTheme.defaultAlgorithm,
 };

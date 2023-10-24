@@ -36,3 +36,14 @@ export async function addProductImageService(productId: string, image: any) {
   });
   return response;
 }
+
+export async function addProductVariationService(
+  productId: string,
+  color: any
+) {
+  const response = await axiosApiInstance.putForm('/product/variation', {
+    productId,
+    color,
+  });
+  return response;
+}

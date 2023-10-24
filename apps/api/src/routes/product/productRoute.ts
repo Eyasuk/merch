@@ -43,6 +43,7 @@ router.put(
   '/variation',
   checkAuthenticated,
   checkCreator,
+  upload.any(),
   editProductVariationHandleValidator,
   product.editProductVariationHandle
 );

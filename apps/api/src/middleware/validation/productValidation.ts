@@ -95,6 +95,55 @@ export const productImageHandleValidator = [
     }),
 ];
 
+export const editProductVariationHandleValidator = [
+  body('color.*.stock')
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage('Invalid stock value'),
+  body('color.*.price')
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('Invalid price value'),
+  body('color.*.color')
+    .optional()
+    .custom((value, { req }) => {
+      const validColor = colorValidator(value);
+
+      if (!validColor) throw new Error(`Invalid Colors`);
+
+      return true;
+    }),
+  body('productId')
+    .not()
+    .isEmpty()
+    .withMessage('ProductId should not be empty')
+    .isString()
+    .custom((value, { req }) => {
+      const validId = isValidObjectId(value);
+      if (!validId) {
+        throw new Error('Invalid Id');
+      }
+      return true;
+    }),
+  check('image').custom((value, { req }) => {
+    if (req.files || req.files.length > 0) {
+      const allowedTypes = ['image/jpeg', 'image/png'];
+      for (var i = 0; i < req.files.length; i++) {
+        if (!allowedTypes.includes(req.files[i].mimetype)) {
+          throw new Error(
+            'Invalid file type. Only JPEG and PNG images are allowed.'
+          );
+        }
+        const maxSize = 1 * 1024 * 1024; // 3MB in bytes
+        if (req.files[i].size > maxSize) {
+          throw new Error('File size exceeds the maximum limit of 1MB.');
+        }
+      }
+    }
+    return true;
+  }),
+];
+
 export const editProductHandleValidator = [
   body('name').isString().withMessage('Name should be string'),
   body('description').isString().withMessage('Description should be string'),
@@ -132,28 +181,4 @@ export const editProductHandleValidator = [
       return true;
     })
     .optional(),
-];
-const isBuffer = (value: any) => {
-  return Buffer.isBuffer(value);
-};
-
-export const editProductVariationHandleValidator = [
-  body('productId')
-    .not()
-    .isEmpty()
-    .withMessage('ProductId should not be empty')
-    .isString()
-    .custom((value, { req }) => {
-      const validId = isValidObjectId(value);
-      if (!validId) {
-        throw new Error('Invalid Id');
-      }
-      return true;
-    }),
-  body('color')
-    .isArray({ min: 1 })
-    .withMessage('Colors must be an array with at least one element'),
-  body('color.*.image').custom(isBuffer).withMessage('Invalid image data'),
-  body('color.*.stock').isInt({ min: 0 }).withMessage('Invalid stock value'),
-  body('color.*.price').isFloat({ min: 0 }).withMessage('Invalid price value'),
 ];

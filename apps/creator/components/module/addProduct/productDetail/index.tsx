@@ -54,7 +54,10 @@ export default function ProductDetail({
         value.category,
         colors
       );
-      setProductDetail((prev: any) => ({ ...prev, ...response.data }));
+      setProductDetail((prev: any) => ({
+        ...prev,
+        detail: { ...response.data },
+      }));
 
       next();
     } catch (err) {
