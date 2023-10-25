@@ -12,7 +12,7 @@ export default function Landing(): JSX.Element {
   const [hoursStyle, setHoursStyle] = useState<any>();
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       const d = new Date(); //object of date()
       const hr = d.getHours();
       const min = d.getMinutes();
@@ -35,6 +35,8 @@ export default function Landing(): JSX.Element {
 
       setHoursStyle(hoursStyle);
     }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -58,9 +60,9 @@ export default function Landing(): JSX.Element {
               src="/landing/clock.png"
               alt="clock"
             />
-            <div className={styles.hour} style={hoursStyle}></div>
-            <div className={styles.minute} style={minutesStyle}></div>
             <div className={styles.second} style={secondsStyle}></div>
+            <div className={styles.minute} style={minutesStyle}></div>
+            <div className={styles.hour} style={hoursStyle}></div>
             <div className={styles.dot}></div>
           </div>
         </div>
