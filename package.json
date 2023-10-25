@@ -7,7 +7,8 @@
     "api_dev": "nx run api:serve:development",
     "admin_dev": "nx run admin:serve:development",
     "creator_dev": "nx run creator:serve:development",
-    "dev": "nx run-many --target serve --parallel=4"
+    "dev": "nx run-many --target serve --parallel=4",
+    "build":"nx run-many --target build"
   },
   "private": true,
   "devDependencies": {
