@@ -4,6 +4,7 @@ import { ConfigProvider, Layout } from 'antd';
 import { theme } from '@merch/shared';
 import FooterModule from 'components/modules/footer';
 import HeaderModule from 'components/modules/header';
+import Landing from 'components/features/landing';
 
 import styles from './common_layout.module.scss';
 
@@ -18,19 +19,23 @@ export function CommonLayout({ children }: Props): JSX.Element {
 
   return (
     <ConfigProvider theme={theme}>
-      <Layout className={styles.body}>
-        {pathname !== '/signin' && pathname !== '/signup' ? (
-          <>
-            <Header className={styles.header} children={<HeaderModule />} />
-            <Content className={styles.contents}>{children}</Content>
-            <Footer className={styles.footer}>
-              <FooterModule />
-            </Footer>
-          </>
-        ) : (
-          children
-        )}
-      </Layout>
+      {process.env.NEXT_PUBLIC_PRODUCTION ? (
+        <Landing />
+      ) : (
+        <Layout className={styles.body}>
+          {pathname !== '/signin' && pathname !== '/signup' ? (
+            <>
+              <Header className={styles.header} children={<HeaderModule />} />
+              <Content className={styles.contents}>{children}</Content>
+              <Footer className={styles.footer}>
+                <FooterModule />
+              </Footer>
+            </>
+          ) : (
+            children
+          )}
+        </Layout>
+      )}
     </ConfigProvider>
   );
 }

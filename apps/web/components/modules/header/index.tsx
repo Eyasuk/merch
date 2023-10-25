@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button, Drawer, Menu } from 'antd';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
-import { Text } from 'components/elements/text';
+import { Text } from '@merch/shared';
 import {
   CartIcon,
   LanguageIcon,
