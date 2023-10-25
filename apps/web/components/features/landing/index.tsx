@@ -61,6 +61,7 @@ export default function Landing(): JSX.Element {
             <div className={styles.hour} style={hoursStyle}></div>
             <div className={styles.minute} style={minutesStyle}></div>
             <div className={styles.second} style={secondsStyle}></div>
+            <div className={styles.dot}></div>
           </div>
         </div>
         <div className={styles.email}>

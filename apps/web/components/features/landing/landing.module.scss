@@ -74,7 +74,8 @@
         }
         .hour,
         .minute,
-        .second {
+        .second,
+        .dot {
           position: absolute;
           background: black;
           border-radius: 10px;
@@ -105,6 +106,15 @@
           top: 22.2%;
           left: 49.3%;
           // opacity: 0.8;
+        }
+        .dot {
+          opacity: 1;
+          height: 12px;
+          text-align: center;
+          width: 12px;
+          top: 52.1%;
+          left: 48.5%;
+          background-color: #639d97;
         }
       }
     }
