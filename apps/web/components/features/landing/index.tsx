@@ -55,11 +55,6 @@ export default function Landing(): JSX.Element {
         </div>
         <div className={styles.clock}>
           <div className={styles.clockItems}>
-            <img
-              className={styles.clockImages}
-              src="/landing/clock.png"
-              alt="clock"
-            />
             <div className={styles.second} style={secondsStyle}></div>
             <div className={styles.minute} style={minutesStyle}></div>
             <div className={styles.hour} style={hoursStyle}></div>

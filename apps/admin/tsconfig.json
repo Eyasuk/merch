@@ -12,7 +12,6 @@
     "isolatedModules": true,
     "incremental": true,
     "baseUrl": ".",
-  
     "plugins": [
       {
         "name": "next"
@@ -31,7 +30,8 @@
     "../../apps/web/.next/types/**/*.ts",
     "../../dist/apps/web/.next/types/**/*.ts",
     "next-env.d.ts",
-    "../../apps/admin/.next/types/**/*.ts"
+    "../../apps/admin/.next/types/**/*.ts",
+    "../../dist/apps/admin/.next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
