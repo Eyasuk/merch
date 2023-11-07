@@ -5,6 +5,7 @@ import { Text, Title } from '@merch/shared';
 import ProductDetail from 'components/module/addProduct/productDetail';
 import ProductImage from 'components/module/addProduct/productImage';
 import ProductVariation from 'components/module/addProduct/productVariation';
+import ProductReview from 'components/module/addProduct/productReview';
 
 import styles from './addProduct.module.scss';
 
@@ -39,7 +40,7 @@ export default function AddProduct(): JSX.Element {
       productDetail={productDetail}
       setProductDetail={setProductDetail}
     />,
-    <div>f</div>,
+    <ProductReview onPrevious={onPrevious} productDetail={productDetail} />,
   ];
 
   return (

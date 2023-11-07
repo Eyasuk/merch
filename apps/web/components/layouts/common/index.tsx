@@ -16,10 +16,9 @@ const { Header, Content, Footer } = Layout;
 
 export function CommonLayout({ children }: Props): JSX.Element {
   const pathname = usePathname();
-
   return (
     <ConfigProvider theme={theme}>
-      {process.env.NEXT_PUBLIC_PRODUCTION ? (
+      {process.env.NEXT_PUBLIC_PRODUCTION == 'true' ? (
         <Landing />
       ) : (
         <Layout className={styles.body}>

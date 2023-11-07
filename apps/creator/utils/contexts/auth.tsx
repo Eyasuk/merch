@@ -36,8 +36,6 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   };
 
   useEffect(() => {
-    console.log(userLoggedIn);
-
     redirectTo(currentPath ?? '/');
   }, []);
 

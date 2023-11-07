@@ -68,6 +68,10 @@ const ProductsSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  totalSold: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const Products = model('products', ProductsSchema);
