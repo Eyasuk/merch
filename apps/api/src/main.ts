@@ -81,7 +81,7 @@ app.use(
       sameSite: 'strict',
       secure: false,
       httpOnly: true,
-      maxAge: 3600000, // Set the desired max age for the session cookie
+      maxAge: 365 * 24 * 60 * 60, // Set the desired max age for the session cookie
     },
     store: MongoStore.create({
       client: db.getClient(),

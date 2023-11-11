@@ -145,29 +145,36 @@ export const editProductVariationHandleValidator = [
 ];
 
 export const editProductHandleValidator = [
-  body('name').isString().withMessage('Name should be string'),
-  body('description').isString().withMessage('Description should be string'),
-  body('category', 'Category must be a string').isString(),
+  body('name').isString().withMessage('Name should be string').optional(),
+  body('description')
+    .isString()
+    .withMessage('Description should be string')
+    .optional(),
+  body('category', 'Category must be a string').isString().optional(),
   body('productInformation')
     .optional()
     .isArray()
-    .withMessage('Product information should be an array'),
+    .withMessage('Product information should be an array')
+    .optional(),
   body('productInformation.*.title')
     .isString()
     .withMessage('Title should be a string'),
   body('productInformation.*.description')
     .isString()
-    .withMessage('Description should be a string'),
+    .withMessage('Description should be a string')
+    .optional(),
   body('price')
     .isNumeric()
     .withMessage('Price should be a number')
     .isFloat({ gt: 1 })
-    .withMessage('Price should be a number greater than 1'),
+    .withMessage('Price should be a number greater than 1')
+    .optional(),
   body('stock')
     .isNumeric()
     .withMessage('Stock should be a number')
     .isFloat({ gt: 1 })
-    .withMessage('Stock should be a number greater than 1'),
+    .withMessage('Stock should be a number greater than 1')
+    .optional(),
   body('colors')
     .isArray()
     .withMessage('Colors should be an array of color')
@@ -180,5 +187,10 @@ export const editProductHandleValidator = [
 
       return true;
     })
+    .optional(),
+  body('status').isBoolean().withMessage('Status should be boolean').optional(),
+  body('completed')
+    .isBoolean()
+    .withMessage('Completed should be boolean')
     .optional(),
 ];

@@ -68,10 +68,11 @@ export async function addImage(
     for (let i = 0; i < req.files.length; i++) {
       fs.unlink(req.files[i].path, (err) => {});
     }
+
     product.image = files;
     await product.save();
 
-    return res.json(product);
+    return res.json(product.image);
   } catch (err) {
     const fileLength = Array.isArray(req.files) ? req.files.length : 0;
     for (let i = 0; i < fileLength; i++) {
@@ -101,7 +102,6 @@ export async function editProductHandle(req: Request, res: Response) {
   try {
     const product = await Product.findOne({
       owner: req.user.id,
-      completed: false,
     });
 
     if (req.user.id != product.owner) {

@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Form, Input, InputNumber, Tabs, Upload } from 'antd';
 import { Text } from '@merch/shared';
 

@@ -59,7 +59,7 @@ export default function ProductImage({
         );
         setProductDetail((prev: any) => ({
           ...prev,
-          image: { ...response.data },
+          image: [...response.data],
         }));
 
         onNext();
