@@ -6,6 +6,7 @@ import {
 import {
   editProductHandleValidator,
   editProductVariationHandleValidator,
+  getProductHandleValidator,
   productHandleValidator,
   productImageHandleValidator,
 } from '../../middleware/validation/productValidation';
@@ -54,5 +55,7 @@ router.get(
   checkCreator,
   product.getUnsavedProductHandle
 );
+
+router.get('/', getProductHandleValidator, product.getProduct);
 
 export default router;

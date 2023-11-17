@@ -1,4 +1,4 @@
-import { body, check } from 'express-validator';
+import { body, check, query } from 'express-validator';
 import colorValidator from '../../utils/mongooseColorValidator';
 import { isValidObjectId } from 'mongoose';
 
@@ -193,4 +193,15 @@ export const editProductHandleValidator = [
     .isBoolean()
     .withMessage('Completed should be boolean')
     .optional(),
+];
+
+export const getProductHandleValidator = [
+  query('bestSelling')
+    .optional()
+    .isBoolean()
+    .withMessage('The bestSelling parameter must be a boolean value.'),
+  query('trending')
+    .optional()
+    .isBoolean()
+    .withMessage('The trending parameter must be a boolean value.'),
 ];

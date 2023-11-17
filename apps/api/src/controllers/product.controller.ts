@@ -225,3 +225,19 @@ export async function editProductVariationHandle(req: Request, res: Response) {
     return res.status(500).json({ error: err.message });
   }
 }
+
+export async function getProduct(req: Request, res: Response) {
+  const result = validateInputs(req);
+  if (!result.success) {
+    return res.status(422).json({ errors: result.data });
+  }
+  const { bestSelling, trending } = req.query;
+
+  const filters = {};
+
+  if (bestSelling) {
+  }
+
+  if (trending) {
+  }
+}
